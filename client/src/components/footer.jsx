@@ -13,13 +13,13 @@ export default function Footer() {
                     <a href="https://prebuiltui.com?utm_source=agentix">
                         <img className="h-9 w-auto" src="/assets/logo.svg" width={138} height={36} alt="logo" />
                     </a>
-                    <p className="text-sm/7 mt-6">PrebuiltUI is a free and open-source UI component library with over 300+ beautifully crafted, customizable components built with Tailwind CSS.</p>
+                    <p className="text-sm/7 mt-6">DevLink is a work-in-progress web app focused on hackathon-driven collaboration.</p>
                 </div>
                 <div className="flex flex-col lg:items-center lg:justify-center">
                     <div className="flex flex-col text-sm space-y-2.5">
                         <h2 className="font-semibold mb-5 text-white">Company</h2>
                         <a className="hover:text-slate-500 transition" href="#">About us</a>
-                        <a className="hover:text-slate-500 transition" href="#">Careers<span className="text-xs text-white bg-indigo-600 rounded-md ml-2 px-2 py-1">We’re hiring!</span></a>
+                        <a className="hover:text-slate-500 transition" href="#">Careers<span className="text-xs text-white bg-indigo-600 rounded-md ml-2 px-2 py-1">Open Source Contributors Invited</span></a>
                         <a className="hover:text-slate-500 transition" href="#">Contact us</a>
                         <a className="hover:text-slate-500 transition" href="#">Privacy policy</a>
                     </div>
@@ -36,7 +36,7 @@ export default function Footer() {
                 </div>
             </div>
             <p className="py-4 text-center border-t mt-6 border-slate-700">
-                Copyright 2025 © <a href="https://prebuiltui.com?utm_source=agentix">PrebuiltUI</a> All Right Reserved.
+                Copyright 2026 © <a href="https://prebuiltui.com?utm_source=agentix">DevLink</a> All Right Reserved.
             </p>
         </motion.footer>
     );
