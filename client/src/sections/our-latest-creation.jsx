@@ -9,25 +9,25 @@ export default function OurLatestCreation() {
 
     const sectionData = [
         {
-            title: "Prompt engineers",
-            description: "Bridging the gap between human intent and machine understanding through expert prompt design.",
+            title: "Balanced team discovery",
+            description: "Find teammates by skills, tech stack, domain interest, availability, and collaboration match.",
             image: "https://images.unsplash.com/photo-1543269865-0a740d43b90c?q=80&w=800&h=400&auto=format&fit=crop",
             align: "object-center",
         },
         {
-            title: "Data scientists",
-            description: "Turning data into actionable insights that drive intelligent innovation and growth.",
+            title: "Idea Hub insights",
+            description: "Post concepts, explore trending ideas, upvote strong solutions, and discover real-world challenges.",
             image: "https://images.unsplash.com/photo-1714976326351-0ecf0244f0fc?q=80&w=800&h=400&auto=format&fit=crop",
             align: "object-right",
         },
         {
-            title: "Software engineers",
-            description: "Building scalable and efficient systems that bring ideas to life through code.",
+            title: "Judge-ready scoring",
+            description: "Simulate hackathon judging with AI feedback on innovation, feasibility, scalability, and demo appeal.",
             image: "https://images.unsplash.com/photo-1736220690062-79e12ca75262?q=80&w=800&h=400&auto=format&fit=crop",
             align: "object-center",
         },
     ];
-
+    
     useEffect(() => {
         if (isHovered) return;
         const interval = setInterval(() => {
@@ -39,10 +39,8 @@ export default function OurLatestCreation() {
     return (
         <section className="flex flex-col items-center" id="creations">
             <SectionTitle
-                title="Our latest creation"
-                description="A visual collection of our most recent works - each piece crafted with intention, emotion, and style."
-            />
-
+                title="Built to win hackathons"
+                description="From team matching to judge-style feedback, DevLink helps teams turn ideas into competitive, demo-ready projects." />
             <div className="flex items-center gap-4 h-100 w-full max-w-5xl mt-18 mx-auto" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} >
                 {sectionData.map((data, index) => (
                     <motion.div key={data.title} className={`relative group flex-grow h-[400px] rounded-xl overflow-hidden ${isHovered && className ? "hover:w-full w-56" : index === activeIndex ? "w-full" : "w-56"} ${className} ${!className ? "pointer-events-none" : ""}`}

@@ -3,17 +3,17 @@ import { motion } from "framer-motion";
 
 export default function OurTestimonials() {
     const testimonials = [
-        { quote: "Super clean and easy to use. These Tailwind + React components saved me hours of dev time!", name: "Richard Nelson", role: "AI Content Marketer", image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200", },
-        { quote: "The design quality is top-notch. Perfect balance between simplicity and style. Highly recommend!", name: "Sophia Martinez", role: "UI/UX Designer", image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200", },
-        { quote: "Absolutely love the reusability of these components. My workflow feels 10x faster now.", name: "Ethan Roberts", role: "Frontend Developer", image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=200&auto=format&fit=crop&q=60", },
-        { quote: "Clean, elegant, and efficient. These components are a dream for any modern web developer.", name: "Isabella Kim", role: "Product Designer", image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=60", },
-        { quote: "I've tried dozens of UI kits, but this one just feels right. Everything works seamlessly.", name: "Liam Johnson", role: "Software Engineer", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100&h=100&auto=format&fit=crop", },
-        { quote: "Brilliantly structured components with clean, modern styling. Makes development a joy!", name: "Ava Patel", role: "Full Stack Developer", image: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/userImage/userImage1.png", },
+        { quote: "We found the perfect mix of designers, developers, and product thinkers in minutes—our team was stronger from day one.", name: "Kiran Shah", role: "Hackathon Team Lead", image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200", },
+        { quote: "DevLink helped us turn a vague idea into a clear roadmap with prioritized MVP features and a judge-ready pitch.", name: "Mina Park", role: "Product Strategist", image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200", },
+        { quote: "The idea hub sparked our best concept, and the AI evaluation flagged the exact improvements judges care about.", name: "Sanjay Patel", role: "Developer", image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=200&auto=format&fit=crop&q=60", },
+        { quote: "We used DevLink to align skills and availability across the team, and the collaboration felt balanced from the first sprint.", name: "Ayesha Khan", role: "Project Founder", image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=60", },
+        { quote: "This platform saved us so much time in team building and idea validation—our demo felt polished, not rushed.", name: "Noah Brown", role: "Software Engineer", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100&h=100&auto=format&fit=crop", },
+        { quote: "The judge-style feedback helped us trim scope and present a stronger case for our concept.", name: "Leila Hassan", role: "UX Researcher", image: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/userImage/userImage1.png", },
     ];
 
     return (
         <section className="flex flex-col items-center" id="testimonials">
-            <SectionTitle title="Our testimonials" description="A visual collection of our most recent works - each piece crafted with intention, emotion, and style." />
+            <SectionTitle title="What teams say about DevLink" description="Real results from hackathon teams that matched better, built faster, and pitched stronger." />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-18 max-w-6xl mx-auto">
                 {testimonials.map((testimonial, index) => (
                     <motion.div key={testimonial.name} className="group border border-slate-800 p-6 rounded-xl"
