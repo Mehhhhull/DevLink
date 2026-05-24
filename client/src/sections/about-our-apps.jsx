@@ -4,27 +4,27 @@ import { motion } from "framer-motion";
 export default function AboutOurApps() {
     const sectionData = [
         {
-            title: "Lightning-Fast Performance",
-            description: "Built with speed — minimal load times and optimized.",
+            title: "Smart team matching",
+            description: "Discover teammates by skills, tech stack, domain interest, availability, and collaboration fit.",
             image: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/aboutSection/flashEmoji.png",
             className: "py-10 border-b border-slate-700 md:py-0 md:border-r md:border-b-0 md:px-10"
         },
         {
-            title: "Beautifully Designed Components",
-            description: "Modern, pixel-perfect UI components ready for any project.",
+            title: "Idea Hub & inspiration",
+            description: "Post hackathon ideas, upvote winning concepts, and browse real-world problem statements.",
             image: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/aboutSection/colorsEmoji.png",
             className: "py-10 border-b border-slate-700 md:py-0 lg:border-r md:border-b-0 md:px-10"
         },
         {
-            title: "Plug-and-Play Integration",
-            description: "Simple setup with support for React, Next.js and Tailwind css.",
+            title: "AI-powered roadmaps",
+            description: "Get personalized tech stacks, MVP plans, and feature prioritization tailored to your team.",
             image: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/aboutSection/puzzelEmoji.png",
             className: "py-10 border-b border-slate-700 md:py-0 md:border-b-0 md:px-10"
         },
     ];
     return (
         <section className="flex flex-col items-center" id="about">
-            <SectionTitle title="About our apps" description="A visual collection of our most recent works - each piece crafted with intention, emotion, and style." />
+            <SectionTitle title="How DevLink helps teams" description="Discover teammates, validate ideas, and turn hackathon concepts into judge-ready MVPs." />
             <div className="relative max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-8 md:px-0 mt-18">
                 {sectionData.map((data, index) => (
                     <motion.div key={data.title} className={data.className}
