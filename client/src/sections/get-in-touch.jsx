@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 export default function GetInTouch() {
     return (
         <section className="flex flex-col items-center" id="contact">
-            <SectionTitle title="Get in touch" description="A visual collection of our most recent works - each piece crafted with intention, emotion, and style." />
+            <SectionTitle title="Request a feature" description="Submit your feature idea for DevLink so we can build the tools and workflows teams need most." />
             <form onSubmit={(e) => e.preventDefault()} className='grid sm:grid-cols-2 gap-3 sm:gap-5 max-w-3xl mx-auto text-slate-400 mt-16 w-full' >
                 <motion.div
                     initial={{ y: 150, opacity: 0 }}
@@ -23,7 +23,7 @@ export default function GetInTouch() {
                     viewport={{ once: true }}
                     transition={{ type: "spring", stiffness: 280, damping: 70, mass: 1 }}
                 >
-                    <label className='font-medium text-slate-200'>Email id</label>
+                    <label className='font-medium text-slate-200'>Email address</label>
                     <input name='email' type="email" placeholder='Enter your email' className='w-full mt-2 p-3 outline-none border border-slate-700 rounded-lg focus-within:ring-1 transition focus:ring-indigo-600' />
                 </motion.div>
 
@@ -33,8 +33,8 @@ export default function GetInTouch() {
                     viewport={{ once: true }}
                     transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
                 >
-                    <label className='font-medium text-slate-200'>Message</label>
-                    <textarea name='message' rows={8} placeholder='Enter your message' className='resize-none w-full mt-2 p-3 outline-none rounded-lg focus-within:ring-1 transition focus:ring-indigo-600 border border-slate-700' />
+                    <label className='font-medium text-slate-200'>Feature request</label>
+                    <textarea name='message' rows={8} placeholder='Describe the feature you want and how it would help your team' className='resize-none w-full mt-2 p-3 outline-none rounded-lg focus-within:ring-1 transition focus:ring-indigo-600 border border-slate-700' />
                 </motion.div>
 
                 <motion.button type='submit' className='w-max flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full'
@@ -43,7 +43,7 @@ export default function GetInTouch() {
                     viewport={{ once: true }}
                     transition={{ type: "spring", stiffness: 280, damping: 70, mass: 1 }}
                 >
-                    Submit
+                    Send request
                     <ArrowUpRight className="size-4.5" />
                 </motion.button>
             </form>
