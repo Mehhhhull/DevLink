@@ -1,48 +1,39 @@
-import userModel from "../models/user.model";
-import crypto from "crypto";
-import jwt from "jsonwebtoken";
-import config from "../config/config.js";
+import User from "../models/user.model.js"
 
-
-export async function register(req, res) {
-  const { username, email, password } = req.body;
-
-  const isAlreadyRegistered=await userModel.findOne({
-    $or:[
-      {username},
-      {email}
-    ]
-  })
-
-  if(isAlreadyRegistered){
-    res.status(409).json({
-      message:"Username or email already exsists"
+export const googleAuth=async(req,res)=>{
+  try {
+    const {name,email}=req.body
+    if(!name || !email){
+      return res.status(400).json({message:"Name and Email is required"})
+    }
+    let user=await User.findOne({email})
+    if(!user){
+      user=await User.create({
+        name,email
+      })
+    }
+    const token=await genToken(user._id)
+    res.cookie("token",token,{
+      httpOnly:true,
+      secure:false,
+      sameSite:"strict",
+      maxAge:7 * 24 * 60 * 60 *1000
     })
+    return res.status(200).json(user)
+  } catch (error) {
+    return res.status(500).json({message:`Google AUth Error ${error}`})
   }
+}
 
-  const hashedPassword=crypto.createHash("sha256").update(password).digest("hex");
-
-  const user=await userModel.create({
-    username,
-    email,
-    password:hashedPassword
-  })
-
-  const token=jwt.sign({
-    id:user._id,
-  }, config.JWT_SECRET,
-{
-  expiresIn:"1d"
-})
-
-res.status(201).json({
-  message:"User registered successfully",
-  user:{
-    username:user.username,
-    email:user.email,
-  },
-  token
-  })
-
-
+export const logout=async(req,res)=>{
+  try {
+    await res.clearCookie("token",{
+      httpOnly:true, //when deployed, true
+      secure:false,//when deployed, false
+      sameSite:"strict",//when deployed, none
+    })
+    return res.status(200).json({message:"Logged out successfully"})
+  } catch (error) {
+    return res.status(500).json({message:`Logout Error ${error}`})
+  }
 }

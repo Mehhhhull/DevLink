@@ -1,12 +1,10 @@
-import { router } from "express";
-import * as authController from "../controllers/auth.controller.js"
+import express from "express";
+import { googleAuth, logout } from '../controllers/auth.controller.js';
+
+const authRouter = express.Router();
 
 
-const authRouter=Router();
-
-/**
- * POST /api/auth/register
- */
-authRouter.post("/register",authController.register)
+authRouter.post("/google", googleAuth);
+authRouter.get("/logout", logout);
 
 export default authRouter;
