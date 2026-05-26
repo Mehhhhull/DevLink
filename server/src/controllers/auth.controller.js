@@ -37,3 +37,58 @@ export const logout=async(req,res)=>{
     return res.status(500).json({message:`Logout Error ${error}`})
   }
 }
+
+export const completeOnboarding = async(req,res)=>{
+  try {
+    const {
+      username,
+      gender,
+      college,
+      skills,
+      bio,
+      github,
+      linkedin,
+      x,
+      portfolio,
+      projects
+    } = req.body
+
+    const user = await User.findByIdAndUpdate( 
+      req.user.id,
+      {
+        username,
+        gender,
+        college,
+        skills,
+        bio,
+
+        socials:{
+          github,
+          linkedin,
+          x,
+          portfolio
+        },
+
+        projects,
+
+        onboardingCompleted:true
+      },
+
+      {new:true}
+    )
+
+    return res.status(200).json({
+
+   message:"Profile completed successfully",
+
+   user
+
+})
+
+  } catch (error) {
+    
+    return res.status(500).json({
+      message:`Onboarding Error ${error}`
+    })
+  }
+}
