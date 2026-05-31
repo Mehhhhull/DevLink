@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 import { motion } from "framer-motion";
 import TiltedImage from "../components/tilt-image";
 
@@ -54,9 +55,10 @@ export default function HeroSection() {
                     Explore DevLink
                     <ArrowRight className="size-5" />
                 </button>
-                <button className="border border-slate-400 active:scale-95 hover:bg-white/10 transition rounded-lg px-8 h-11">
-                    Follow on Github!
-                </button>
+                    <a href="https://github.com/Mehhhhull" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 border border-slate-400 active:scale-95 hover:bg-white/10 transition rounded-lg px-6 h-11 text-slate-100">
+                        <Github className="w-4 h-4" />
+                        <span className="font-medium">Follow on GitHub</span>
+                    </a>
             </motion.div>
             <TiltedImage />
         </section>
