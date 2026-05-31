@@ -9,11 +9,8 @@ const springValues = {
 
 export default function TiltedImage({ rotateAmplitude = 3, }) {
     const ref = useRef(null);
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
     const rotateX = useSpring(useMotionValue(0), springValues);
     const rotateY = useSpring(useMotionValue(0), springValues);
-    const rotateFigcaption = useSpring(0, { stiffness: 350, damping: 30, mass: 1 });
 
     const [lastY, setLastY] = useState(0);
 
@@ -30,18 +27,12 @@ export default function TiltedImage({ rotateAmplitude = 3, }) {
         rotateX.set(rotationX);
         rotateY.set(rotationY);
 
-        x.set(e.clientX - rect.left);
-        y.set(e.clientY - rect.top);
-
-        const velocityY = offsetY - lastY;
-        rotateFigcaption.set(-velocityY * 0.6);
         setLastY(offsetY);
     }
 
     function handleMouseLeave() {
         rotateX.set(0);
         rotateY.set(0);
-        rotateFigcaption.set(0);
     }
 
     return (
@@ -52,10 +43,49 @@ export default function TiltedImage({ rotateAmplitude = 3, }) {
             transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
         >
             <motion.div className="relative [transform-style:preserve-3d] w-full max-w-4xl" style={{ rotateX, rotateY }} >
-                <img src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/hero-section-showcase-2.png"
-                    className="w-full rounded-[15px] will-change-transform [transform:translateZ(0)]"
-                    alt="hero section showcase"
-                />
+                <div className="bg-slate-950/95 border border-slate-700 rounded-[22px] shadow-[0_40px_120px_rgba(15,23,42,0.45)] overflow-hidden">
+                    <div className="flex items-center gap-3 px-4 py-3 bg-slate-900/95 border-b border-slate-700">
+                        <span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                        <span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                        <span className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                        <div className="ml-auto text-xs uppercase tracking-[0.2em] text-slate-500">
+                            devlink / roadmap
+                        </div>
+                    </div>
+                    <div className="p-6 text-slate-200 font-mono text-sm leading-6 space-y-2">
+                        <div className="overflow-hidden">
+                            <div className="terminal-line" style={{ animation: 'typing 1.5s steps(40,end) 0.25s forwards', width: 0 }}>
+                                const idea = {'{'}
+                            </div>
+                        </div>
+                        <div className="overflow-hidden">
+                            <div className="terminal-line" style={{ animation: 'typing 1.5s steps(40,end) 0.4s forwards', width: 0 }}>
+                                &nbsp;&nbsp;title: 'Smart Campus Assistant',
+                            </div>
+                        </div>
+                        <div className="overflow-hidden">
+                            <div className="terminal-line" style={{ animation: 'typing 1.5s steps(40,end) 0.55s forwards', width: 0 }}>
+                                &nbsp;&nbsp;domain: 'AI/ML',
+                            </div>
+                        </div>
+                        <div className="overflow-hidden">
+                            <div className="terminal-line" style={{ animation: 'typing 1.5s steps(40,end) 0.7s forwards', width: 0 }}>
+                                &nbsp;&nbsp;stack: ['React', 'Node.js', 'TensorFlow'],
+                            </div>
+                        </div>
+                        <div className="overflow-hidden">
+                            <div className="terminal-line" style={{ animation: 'typing 1.5s steps(40,end) 0.85s forwards', width: 0 }}>
+                                &nbsp;&nbsp;roadmap: 'MVP -> Prototype -> Pitch',
+                            </div>
+                        </div>
+                        <div className="overflow-hidden">
+                            <div className="terminal-line" style={{ animation: 'typing 1.5s steps(40,end) 1s forwards', width: 0 }}>
+                                {'}'};
+                                <span className="inline-block ml-2 animate-blink">|</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </motion.div>
         </motion.figure>
     );
