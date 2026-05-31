@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import { ArrowRight, Github } from "lucide-react";
 import { motion } from "framer-motion";
 import TiltedImage from "../components/tilt-image";
