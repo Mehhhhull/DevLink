@@ -4,28 +4,39 @@ import { motion } from "framer-motion";
 export default function AboutOurApps() {
     const sectionData = [
         {
-            title: "Smart team matching",
-            description: "Discover teammates by skills, tech stack, domain interest, availability, and collaboration fit.",
+            title: "Smart Team Matching",
+            description: "Find complementary teammates with skill, stack, domain and availability filters plus AI compatibility scores.",
             image: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/aboutSection/flashEmoji.png",
-            className: "py-10 border-b border-slate-700 md:py-0 md:border-r md:border-b-0 md:px-10"
+            className: "py-6 md:py-4 md:px-6"
         },
         {
-            title: "Idea Hub & inspiration",
-            description: "Post hackathon ideas, upvote winning concepts, and browse real-world problem statements.",
+            title: "Idea Hub",
+            description: "Share and discover vetted hackathon ideas—upvote trends and get personalized MVP roadmaps.",
             image: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/aboutSection/colorsEmoji.png",
-            className: "py-10 border-b border-slate-700 md:py-0 lg:border-r md:border-b-0 md:px-10"
+            className: "py-6 md:py-4 md:px-6"
         },
         {
-            title: "AI-powered roadmaps",
-            description: "Get personalized tech stacks, MVP plans, and feature prioritization tailored to your team.",
+            title: "AI Judge System",
+            description: "Automated RAG-powered scoring and judge-style feedback to improve innovation, feasibility and demo appeal.",
             image: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/aboutSection/puzzelEmoji.png",
-            className: "py-10 border-b border-slate-700 md:py-0 md:border-b-0 md:px-10"
+            className: "py-6 md:py-4 md:px-6"
+        },
+        {
+            title: "Mentor Ecosystem",
+            description: "Connect with mentors and domain channels for hands-on guidance during your hackathon.",
+            image: (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="44" height="44" className="text-indigo-400">
+                    <path d="M3 11v2h4l7 4V7L7 11H3z" fill="currentColor" />
+                    <path d="M21 7v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+            ),
+            className: "py-6 md:py-4 md:px-6"
         },
     ];
     return (
         <section className="flex flex-col items-center" id="about">
-            <SectionTitle title="How DevLink helps teams" description="Discover teammates, validate ideas, and turn hackathon concepts into judge-ready MVPs." />
-            <div className="relative max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-8 md:px-0 mt-18">
+            <SectionTitle title="How DevLink helps teams" description="Discover teammates with filterable skills, tech stacks, domains, availability and experience; explore community-sourced ideas in the Idea Hub; receive AI-generated tech stacks, prioritized roadmaps and judge-style feedback powered by RAG and historical-winning intelligence." />
+            <div className="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-6 md:px-0 gap-6 mt-18">
                 {sectionData.map((data, index) => (
                     <motion.div key={data.title} className={data.className}
                         initial={{ y: 150, opacity: 0 }}
@@ -33,8 +44,12 @@ export default function AboutOurApps() {
                         viewport={{ once: true }}
                         transition={{ delay: `${index * 0.15}`, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
                     >
-                        <div className="size-10 p-2 bg-indigo-600/20 border border-indigo-600/30 rounded">
-                            <img src={data.image} alt="" />
+                        <div className="h-12 w-12 p-2 bg-indigo-600/20 border border-indigo-600/30 rounded flex items-center justify-center">
+                            {typeof data.image === 'string' ? (
+                                <img src={data.image} alt={data.title} className="h-8 w-8 object-contain" />
+                            ) : (
+                                data.image
+                            )}
                         </div>
                         <div className="mt-5 space-y-2">
                             <h3 className="text-base font-medium text-slate-200">{data.title}</h3>

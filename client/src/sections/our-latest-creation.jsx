@@ -9,21 +9,27 @@ export default function OurLatestCreation() {
 
     const sectionData = [
         {
-            title: "Balanced team discovery",
-            description: "Find teammates by skills, tech stack, domain interest, availability, and collaboration match.",
+            title: "Team Matching",
+            description: "Find complementary teammates by skills, stack, domain, availability and AI compatibility.",
             image: "https://images.unsplash.com/photo-1543269865-0a740d43b90c?q=80&w=800&h=400&auto=format&fit=crop",
             align: "object-center",
         },
         {
-            title: "Idea Hub insights",
-            description: "Post concepts, explore trending ideas, upvote strong solutions, and discover real-world challenges.",
+            title: "Idea Hub",
+            description: "Share and discover vetted hackathon ideas and get personalized MVP roadmaps.",
             image: "https://images.unsplash.com/photo-1714976326351-0ecf0244f0fc?q=80&w=800&h=400&auto=format&fit=crop",
             align: "object-right",
         },
         {
-            title: "Judge-ready scoring",
-            description: "Simulate hackathon judging with AI feedback on innovation, feasibility, scalability, and demo appeal.",
+            title: "AI Judge System",
+            description: "RAG-powered scoring and judge-style feedback to refine scope and boost judges' appeal.",
             image: "https://images.unsplash.com/photo-1736220690062-79e12ca75262?q=80&w=800&h=400&auto=format&fit=crop",
+            align: "object-center",
+        },
+        {
+            title: "Mentor Ecosystem",
+            description: "Connect with domain mentors and community channels for hands-on guidance.",
+            image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&h=400&auto=format&fit=crop",
             align: "object-center",
         },
     ];
@@ -40,7 +46,7 @@ export default function OurLatestCreation() {
         <section className="flex flex-col items-center" id="creations">
             <SectionTitle
                 title="Built to win hackathons"
-                description="From team matching to judge-style feedback, DevLink helps teams turn ideas into competitive, demo-ready projects." />
+                description="DevLink is an AI-powered hackathon co-founder platform that helps participants build stronger teams, discover better ideas, and execute projects more effectively. Find teammates using skill, tech-stack, domain and availability filters, explore the Idea Hub, and get AI-generated roadmaps and judge-style feedback." />
             <div className="flex items-center gap-4 h-100 w-full max-w-5xl mt-18 mx-auto" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} >
                 {sectionData.map((data, index) => (
                     <motion.div key={data.title} className={`relative group flex-grow h-[400px] rounded-xl overflow-hidden ${isHovered && className ? "hover:w-full w-56" : index === activeIndex ? "w-full" : "w-56"} ${className} ${!className ? "pointer-events-none" : ""}`}
