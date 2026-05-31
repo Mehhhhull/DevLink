@@ -14,8 +14,8 @@ export default function Navbar() {
                 transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1 }}
             >
                 <div className="flex flex-col items-start gap-2">
-                    <a href="https://prebuiltui.com?utm_source=agentix">
-                        <img className="h-9 w-auto" src="/assets/logo.svg" width={138} height={36} alt="logo" />
+                    <a href="/" className="text-2xl font-bold tracking-tight text-white">
+                        DevLink
                     </a>
                     <div className="flex items-center rounded-full border border-indigo-400/30 bg-slate-900/70 px-3 py-2 text-xs font-semibold text-slate-100 shadow-sm">
                         <span className="mr-2 text-indigo-200">Backed by</span>
