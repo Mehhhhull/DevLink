@@ -3,14 +3,14 @@ import { genToken } from "../config/token.js"
 
 export const googleAuth=async(req,res)=>{
   try {
-    const {name,email}=req.body
-    if(!name || !email){
-      return res.status(400).json({message:"Name and Email is required"})
+    const {name,email,firebaseUID}=req.body
+    if(!name || !email || !firebaseUID){
+      return res.status(400).json({message:"Name, Email, and Firebase UID are required"})
     }
     let user=await User.findOne({email})
     if(!user){
       user=await User.create({
-        name,email
+        name,email,firebaseUID
       })
     }
     const token=await genToken(user._id)
