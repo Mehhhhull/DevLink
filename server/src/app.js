@@ -6,6 +6,7 @@ import authRouter from './routes/auth.routes.js';
 import teamRouter from './routes/team.routes.js';
 import aiJudgeRouter from './routes/ai-judge.routes.js';
 
+
 const app = express();
 app.use(morgan('dev'));
 

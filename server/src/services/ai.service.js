@@ -1,4 +1,4 @@
-const { GoogleGenAI } = require("@google/genai");
+import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({
   apiKey: process.env.GOOGLE_GENAI_API_KEY,
@@ -278,6 +278,4 @@ async function evaluateHackathonIdea(idea) {
   };
 }
 
-module.exports = {
-  evaluateHackathonIdea,
-};
+export { evaluateHackathonIdea };
