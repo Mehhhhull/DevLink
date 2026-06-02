@@ -8,8 +8,10 @@ import Navbar from "./components/navbar";
 import AboutOurApps from "./sections/about-our-apps";
 import HeroSection from "./sections/hero-section";
 import OurLatestCreation from "./sections/our-latest-creation";
+import Onboarding from "./pages/Onboarding";
+import { Routes, Route } from "react-router-dom";
 
-export default function Page() {
+function Home() {
     return (
         <>
             <LenisScroll />
@@ -25,5 +27,14 @@ export default function Page() {
             </main>
             <Footer />
         </>
+    );
+}
+
+export default function Page() {
+    return (
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/onboarding" element={<Onboarding />} />
+        </Routes>
     );
 }

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../firebase";
 
 export default function FirebaseAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -41,7 +43,15 @@ export default function FirebaseAuth() {
         throw new Error(errorData.message || "Backend login failed");
       }
 
+      const backendUser = await backendResponse.json().catch(()=>null);
+
       setUser(firebaseUser);
+
+      if (backendUser && backendUser.onboardingCompleted === false) {
+        navigate('/onboarding');
+      } else {
+        navigate('/');
+      }
     } catch (signInError) {
       setError(signInError.message || "Google sign-in failed");
     } finally {
