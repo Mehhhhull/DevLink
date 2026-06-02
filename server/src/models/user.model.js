@@ -72,13 +72,19 @@ const userSchema = new mongoose.Schema({
 
  lookingFor:[String],
 
+ teamRole: {
+   type: String,
+   enum: ["find", "create", "none"],
+   default: "none"
+ },
+
  experienceLevel:{
-    type:String,
-    enum:[
-      "beginner",
-      "intermediate",
-      "advanced"
-    ]
+   type:String,
+   enum:[
+     "beginner",
+     "intermediate",
+     "advanced"
+   ]
  },
 
  availability:{
