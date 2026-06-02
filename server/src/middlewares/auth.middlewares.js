@@ -32,3 +32,5 @@ async function authMiddleware(req, res, next) {
     });
   }
 }
+
+export { authMiddleware };
