@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MenuIcon, XIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import FirebaseAuth from "./firebase-auth";
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,9 +28,7 @@ export default function Navbar() {
                     <button className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-md active:scale-95">
                         Try DevLink
                     </button>
-                    <button className="hover:bg-slate-300/20 transition px-6 py-2 border border-slate-400 rounded-md active:scale-95">
-                        Sign in
-                    </button>
+                    <FirebaseAuth />
                 </div>
             </motion.nav>
         </>
