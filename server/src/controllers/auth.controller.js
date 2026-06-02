@@ -13,12 +13,12 @@ export const googleAuth=async(req,res)=>{
         name,email,firebaseUID
       })
     }
-    const token=await genToken(user._id)
-    res.cookie("token",token,{
-      httpOnly:true,
-      secure:false,
-      sameSite:"strict",
-      maxAge:7 * 24 * 60 * 60 *1000
+    const token = await genToken(user._id)
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     })
     return res.status(200).json(user)
   } catch (error) {
@@ -31,7 +31,7 @@ export const logout=async(req,res)=>{
     await res.clearCookie("token",{
       httpOnly:true, //when deployed, true
       secure:false,//when deployed, false
-      sameSite:"strict",//when deployed, none
+      sameSite:"none",
     })
     return res.status(200).json({message:"Logged out successfully"})
   } catch (error) {

@@ -58,10 +58,21 @@ export const getCreatorTeams = async (req, res) => {
   }
 };
 
+export const getOpenTeams = async (req, res) => {
+  try {
+    const teams = await Team.find({ status: "open", creator: { $ne: req.user._id } })
+      .populate("creator", "username fullName")
+      .populate("members", "username fullName");
+    return res.status(200).json(teams);
+  } catch (error) {
+    return res.status(500).json({ message: `Fetch open teams error ${error}` });
+  }
+};
+
 export const getTeamSeekers = async (req, res) => {
   try {
     const seekers = await User.find({ teamRole: "find" }).select(
-      "username fullName email bio skills techStack preferredRoles experienceLevel availability location socials"
+      "username fullName email bio skills techStack preferredRoles experienceLevel availability location socials college"
     );
     return res.status(200).json(seekers);
   } catch (error) {
@@ -196,5 +207,25 @@ export const respondToInvitation = async (req, res) => {
     return res.status(200).json(invitation);
   } catch (error) {
     return res.status(500).json({ message: `Respond invitation error ${error}` });
+  }
+};
+
+export const deleteTeam = async (req, res) => {
+  try {
+    const { teamId } = req.params;
+    const team = await Team.findById(teamId);
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    if (team.creator.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Only the team creator can delete this team" });
+    }
+
+    await Team.findByIdAndDelete(teamId);
+    return res.status(200).json({ message: "Team deleted successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Delete team error ${error}` });
   }
 };
