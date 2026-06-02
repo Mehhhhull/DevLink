@@ -92,3 +92,58 @@ export const completeOnboarding = async(req,res)=>{
     })
   }
 }
+
+export const getProfile=async(req,res)=>{
+
+  try {
+
+    const user=await User.findById(req.user.id)
+
+    if(!user){
+      return res.status(404)
+      .json({
+        message:"User not found"
+      })
+    }
+
+    return res.status(200).json(user)
+
+  }
+
+  catch(error){
+
+    return res.status(500).json({
+      message:`Profile Error ${error}`
+    })
+  }
+}
+
+export const updateProfile=async(req,res)=>{
+
+  try {
+
+    const user=
+      await User.findByIdAndUpdate(
+
+        req.user.id,
+
+        req.body,
+
+        {
+          new:true
+        }
+      )
+
+    return res.status(200)
+    .json(user)
+
+  }
+
+  catch(error){
+
+    return res.status(500).json({
+      message:`Update Error ${error}`
+    })
+  }
+}
+
