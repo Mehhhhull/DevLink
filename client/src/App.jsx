@@ -9,7 +9,11 @@ import AboutOurApps from "./sections/about-our-apps";
 import HeroSection from "./sections/hero-section";
 import OurLatestCreation from "./sections/our-latest-creation";
 import Onboarding from "./pages/Onboarding";
+import TeamFinder from "./pages/TeamFinder";
+import Dashboard from "./pages/Dashboard";
 import { Routes, Route } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function Home() {
     return (
@@ -31,10 +35,14 @@ function Home() {
 }
 
 export default function Page() {
+    const { user } = useAuth();
+
+    if (user === undefined) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/" element={user ? (<ProtectedRoute><Dashboard /></ProtectedRoute>) : (<Home />)} />
+            <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
         </Routes>
     );
 }

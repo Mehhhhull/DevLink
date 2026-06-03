@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 
 export default function FirebaseAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { setUser: setAuthUser } = useAuth();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -46,6 +48,7 @@ export default function FirebaseAuth() {
       const backendUser = await backendResponse.json().catch(()=>null);
 
       setUser(firebaseUser);
+      setAuthUser(backendUser);
 
       if (backendUser && backendUser.onboardingCompleted === false) {
         navigate('/onboarding');
@@ -70,6 +73,8 @@ export default function FirebaseAuth() {
         credentials: "include",
       });
       setUser(null);
+      setAuthUser(null);
+      navigate('/');
     } catch (logoutError) {
       setError(logoutError.message || "Logout failed");
     } finally {
