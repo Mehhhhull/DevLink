@@ -1,94 +1,70 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import config from "../config/config.js";
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GOOGLE_GENAI_API_KEY,
-});
+const genAI = new GoogleGenerativeAI(config.GOOGLE_GENAI_API_KEY);
 
 async function runJudge(prompt) {
   try {
+    if (!config.GOOGLE_GENAI_API_KEY) {
+      throw new Error("Google GenAI API key is not configured");
+    }
 
-    const response =
-      await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: prompt,
-        config: {
-          responseMimeType: "application/json",
-        },
-      });
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-2.5-flash"
+    });
 
-    return JSON.parse(response.text());
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    let responseText = response.text();
+    
+    // Clean up markdown formatting from AI response
+    responseText = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    
+    // Parse JSON response
+    return JSON.parse(responseText);
 
-  }
-
-  catch (error) {
-
+  } catch (error) {
     console.error("Judge Error:", error);
-
     return {
       error: true,
       message: error.message,
+      score: 5,
+      criteria: "error", 
+      strengths: [],
+      weaknesses: [],
+      judgeReasoning: `Error: ${error.message}`,
+      improvementSuggestions: []
     };
   }
 }
 
 async function evaluateInnovation(idea) {
+  return runJudge(`Rate this hackathon idea for innovation (1-10): ${idea}
 
-  return runJudge(`
-
-You are an expert MLH Hackathon Judge evaluating ONLY INNOVATION.
-
-PROJECT IDEA:
-${idea}
-
-Evaluate:
-- Originality
-- Differentiation
-- Creative problem solving
-- Uniqueness
-
-OUTPUT JSON:
-
+Respond with this JSON format:
 {
- "criteria":"innovation",
- "score":0,
- "strengths":[],
- "weaknesses":[],
- "judgeReasoning":"",
- "improvementSuggestions":[]
-}
-
-`);
+  "criteria": "innovation",
+  "score": 7,
+  "strengths": ["creative approach"],
+  "weaknesses": ["needs more detail"], 
+  "judgeReasoning": "Brief explanation",
+  "improvementSuggestions": ["add unique features"]
+}`);
 }
 
 async function evaluateFeasibility(idea) {
+  return runJudge(`Rate this hackathon idea for feasibility (1-10): ${idea}
 
-  return runJudge(`
-
-You are an MLH Hackathon Judge evaluating ONLY FEASIBILITY.
-
-PROJECT IDEA:
-${idea}
-
-Evaluate:
-- Technical feasibility
-- Build realism
-- Deployment practicality
-- Constraints
-- Risks
-
-OUTPUT JSON:
-
+Respond with this JSON format:
 {
- "criteria":"feasibility",
- "score":0,
- "strengths":[],
- "weaknesses":[],
- "risks":[],
- "judgeReasoning":"",
- "improvementSuggestions":[]
-}
-
-`);
+  "criteria": "feasibility", 
+  "score": 6,
+  "strengths": ["realistic scope"],
+  "weaknesses": ["time constraints"],
+  "risks": ["technical complexity"],
+  "judgeReasoning": "Brief explanation",
+  "improvementSuggestions": ["simplify features"]
+}`);
 }
 
 async function evaluateTechnical(idea) {
@@ -183,20 +159,30 @@ OUTPUT JSON:
 }
 
 function calculateOverallScore(results) {
+  try {
+    const scores = {};
+    
+    Object.entries(results).forEach(([key, evaluation]) => {
+      if (evaluation && !evaluation.error && typeof evaluation.score === 'number' && evaluation.score > 0) {
+        scores[key] = evaluation.score;
+      } else {
+        scores[key] = 5; // Default fallback
+      }
+    });
 
-  return (
+    const overallScore = (
+      scores.innovation * 0.25 +
+      scores.feasibility * 0.25 +
+      scores.technical * 0.20 +
+      scores.appeal * 0.20 +
+      scores.scope * 0.10
+    ).toFixed(1);
 
-    results.innovation.score * 0.25 +
-
-    results.feasibility.score * 0.25 +
-
-    results.technical.score * 0.20 +
-
-    results.appeal.score * 0.20 +
-
-    results.scope.score * 0.10
-
-  ).toFixed(1);
+    return overallScore;
+  } catch (error) {
+    console.error("Error calculating overall score:", error);
+    return "5.0";
+  }
 }
 
 async function generateHeadJudgeSummary(results) {

@@ -131,6 +131,8 @@ export const inviteSeeker = async (req, res) => {
 
 export const getInvitations = async (req, res) => {
   try {
+    console.log("Fetching invitations for user:", req.user._id);
+    
     const sentInvitations = await TeamInvitation.find({ invitedBy: req.user._id })
       .populate("team", "name status")
       .populate("user", "username fullName email");
@@ -139,9 +141,11 @@ export const getInvitations = async (req, res) => {
       .populate("team", "name status")
       .populate("invitedBy", "username fullName email");
 
+    console.log("Found invitations:", { sent: sentInvitations.length, received: receivedInvitations.length });
     return res.status(200).json({ sentInvitations, receivedInvitations });
   } catch (error) {
-    return res.status(500).json({ message: `Fetch invitations error ${error}` });
+    console.error("Get invitations error:", error);
+    return res.status(500).json({ message: `Fetch invitations error: ${error.message}` });
   }
 };
 
