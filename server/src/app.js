@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth.routes.js';
 import teamRouter from './routes/team.routes.js';
 import aiJudgeRouter from './routes/ai-judge.routes.js';
+import ideasRouter from './routes/ideas.routes.js';
 
 
 const app = express();
@@ -26,5 +27,6 @@ app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use('/api/team', teamRouter);
 app.use('/api/ai-judge', aiJudgeRouter);
+app.use('/api/ideas', ideasRouter);
 
 export default app;
