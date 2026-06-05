@@ -3,10 +3,12 @@ import { useAuth } from "../context/AuthContext";
 import TeamMatching from "../components/TeamMatching";
 import Settings from "../components/Settings";
 import AIJudge from "./AIJudge";
+import IdeaHub from "./IdeaHub";
 import { 
   UsersIcon, 
   CogIcon, 
   SparklesIcon,
+  LightBulbIcon,
   Bars3Icon,
   XMarkIcon
 } from "@heroicons/react/24/outline";
@@ -30,6 +32,13 @@ export default function Dashboard() {
       icon: SparklesIcon,
       description: "Get feedback on ideas",
       gradient: "from-purple-500 to-pink-600"
+    },
+    {
+      id: "ideaHub",
+      label: "Idea Hub",
+      icon: LightBulbIcon,
+      description: "Post ideas, upvote, and solve problems",
+      gradient: "from-emerald-500 to-teal-600"
     }
   ];
 
@@ -47,6 +56,8 @@ export default function Dashboard() {
         return <TeamMatching />;
       case "aiJudge":
         return <AIJudge />;
+      case "ideaHub":
+        return <IdeaHub />;
       case "settings":
         return <Settings />;
       default:
