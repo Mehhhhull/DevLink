@@ -450,7 +450,12 @@ export default function TeamFinder() {
                     </label>
                     <label className="space-y-2 text-sm text-slate-300">
                       Graduation year
-                      <input name="graduationYear" value={profileForm.graduationYear} onChange={handleProfileChange} className="w-full rounded-md p-3 bg-slate-800 border border-slate-700" />
+                      <select name="graduationYear" value={profileForm.graduationYear} onChange={handleProfileChange} className="w-full rounded-md p-3 bg-slate-800 border border-slate-700">
+                        <option value="">Select Year</option>
+                        {Array.from({ length: 10 }, (_, i) => new Date().getFullYear() + i).map(year => (
+                          <option key={year} value={year}>{year}</option>
+                        ))}
+                      </select>
                     </label>
                     <label className="space-y-2 text-sm text-slate-300">
                       City

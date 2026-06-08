@@ -158,7 +158,12 @@ export default function Onboarding() {
 
           <div>
             <label className="block text-sm text-slate-300">Graduation Year</label>
-            <input name="graduationYear" value={form.graduationYear} onChange={handleChange} className="mt-1 w-full rounded-md p-2 bg-slate-800 border border-slate-700" type="number" />
+            <select name="graduationYear" value={form.graduationYear} onChange={handleChange} className="mt-1 w-full rounded-md p-2 bg-slate-800 border border-slate-700">
+              <option value="">Select Year</option>
+              {Array.from({ length: 10 }, (_, i) => new Date().getFullYear() + i).map(year => (
+                <option key={year} value={year}>{year}</option>
+              ))}
+            </select>
           </div>
 
           <div className="md:col-span-2">
