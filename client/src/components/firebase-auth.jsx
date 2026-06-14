@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { onAuthStateChanged, signInWithRedirect, signInWithPopup, getRedirectResult, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../firebase";
 import { useAuth } from "../context/AuthContext";
@@ -10,14 +10,27 @@ export default function FirebaseAuth() {
   const navigate = useNavigate();
   const { user: backendUser, setUser: setAuthUser, refresh } = useAuth();
 
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    setError("");
+  // Check for redirect result on component mount
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result && result.user) {
+          await processFirebaseUser(result.user);
+        }
+      } catch (error) {
+        console.error('Redirect result error:', error);
+        setError(error.message || "Sign in failed");
+      }
+    };
 
+    handleRedirectResult();
+  }, []);
+
+  const processFirebaseUser = async (firebaseUser) => {
     try {
-      const result = await signInWithPopup(auth, provider);
-      const firebaseUser = result.user;
-
+      setLoading(true);
+      
       const backendResponse = await fetch("/api/auth/google", {
         method: "POST",
         headers: {
@@ -42,12 +55,40 @@ export default function FirebaseAuth() {
       if (backendUser && backendUser.onboardingCompleted === false) {
         navigate('/onboarding');
       } else {
-        navigate('/');
+        navigate('/'); // Fixed: redirect to root instead of /dashboard
+      }
+    } catch (error) {
+      console.error('Process Firebase user error:', error);
+      setError(error.message || "Authentication failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      // Try popup first, fallback to redirect
+      try {
+        const result = await signInWithPopup(auth, provider);
+        if (result && result.user) {
+          await processFirebaseUser(result.user);
+        }
+      } catch (popupError) {
+        // If popup is blocked or fails, use redirect
+        if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/cancelled-popup-request') {
+          console.log('Popup blocked, using redirect...');
+          await signInWithRedirect(auth, provider);
+          return; // Don't set loading to false here as redirect will handle it
+        } else {
+          throw popupError;
+        }
       }
     } catch (signInError) {
       console.error('Sign in error:', signInError);
       setError(signInError.message || "Google sign-in failed");
-    } finally {
       setLoading(false);
     }
   };
@@ -57,7 +98,7 @@ export default function FirebaseAuth() {
     setError("");
 
     try {
-      // Clear backend session
+      // Clear backend session first
       await fetch("/api/auth/logout", {
         method: "GET",
         credentials: "include",
@@ -66,8 +107,8 @@ export default function FirebaseAuth() {
       // Sign out from Firebase
       await signOut(auth);
       
-      // Refresh auth state
-      await refresh();
+      // Clear auth state
+      setAuthUser(null);
       
       navigate('/');
     } catch (logoutError) {
@@ -91,7 +132,7 @@ export default function FirebaseAuth() {
           <button
             onClick={handleLogout}
             disabled={loading}
-            className="px-5 py-2 bg-slate-700 hover:bg-slate-600 transition text-white rounded-md active:scale-95"
+            className="px-5 py-2 bg-slate-700 hover:bg-slate-600 transition text-white rounded-md active:scale-95 disabled:opacity-50"
           >
             {loading ? "Logging out..." : "Logout"}
           </button>
@@ -100,12 +141,26 @@ export default function FirebaseAuth() {
         <button
           onClick={handleGoogleSignIn}
           disabled={loading}
-          className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-md active:scale-95"
+          className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-md active:scale-95 disabled:opacity-50"
         >
-          {loading ? "Loading..." : "Sign in with Google"}
+          {loading ? "Signing in..." : "Sign in with Google"}
         </button>
       )}
-      {error && <span className="text-xs text-rose-300">{error}</span>}
+      {error && (
+        <div className="text-xs text-rose-300 max-w-xs">
+          {error}
+          {error.includes('popup-blocked') && (
+            <div className="mt-1">
+              <button 
+                onClick={() => setError("")}
+                className="text-indigo-400 underline"
+              >
+                Dismiss
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

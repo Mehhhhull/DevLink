@@ -1,392 +1,553 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
-const demoSeekers = [
-  { _id: "s1", username: "Aarav", fullName: "Aarav Sharma", bio: "Full-stack dev. Built 5+ hackathon projects.", skills: ["React", "Node.js", "Firebase"], gender: "male", location: { city: "Bengaluru", country: "India" }, college: { collegeName: "IIT Bombay", degree: "B.Tech", branch: "Computer Science" }, experienceLevel: "advanced", availability: "parttime" },
-  { _id: "s2", username: "Isha", fullName: "Isha Patel", bio: "UI/UX designer and frontend engineer.", skills: ["Figma", "Tailwind", "React"], gender: "female", location: { city: "Ahmedabad", country: "India" }, college: { collegeName: "NID", degree: "Design", branch: "Interaction Design" }, experienceLevel: "intermediate", availability: "flexible" },
-  { _id: "s3", username: "Kabir", fullName: "Kabir Khan", bio: "ML enthusiast, worked with PyTorch and TensorFlow.", skills: ["Python", "PyTorch", "ML"], gender: "male", location: { city: "Hyderabad", country: "India" }, college: { collegeName: "IIIT Hyderabad", degree: "M.Tech", branch: "Data Science" }, experienceLevel: "advanced", availability: "weekends" },
-  { _id: "s4", username: "Nisha", fullName: "Nisha Verma", bio: "Mobile dev (Flutter), loves rapid prototyping.", skills: ["Flutter", "Dart", "Figma"], gender: "female", location: { city: "Mumbai", country: "India" }, college: { collegeName: "SIT", degree: "B.Tech", branch: "Information Technology" }, experienceLevel: "intermediate", availability: "fulltime" },
-  { _id: "s5", username: "Rohit", fullName: "Rohit Singh", bio: "Backend engineer, scalable systems.", skills: ["Go", "Postgres", "Redis"], gender: "male", location: { city: "Delhi", country: "India" }, college: { collegeName: "NSUT", degree: "B.Tech", branch: "Computer Science" }, experienceLevel: "advanced", availability: "parttime" },
-];
+// Comprehensive sample data covering ALL filter combinations
+const demoTeammates = [
+  // IIT Bombay - All experience levels & genders
+  {
+    _id: "demo1",
+    fullName: "Aarav Sharma",
+    username: "aarav_iit",
+    bio: "React expert from IIT Bombay, building scalable web applications.",
+    skills: ["React", "JavaScript", "Node.js"],
+    avatar: "AS",
+    rating: 4.9,
+    projectCount: 18,
+    location: { city: "Mumbai", country: "IN" },
+    college: { collegeName: "IIT Bombay" },
+    experienceLevel: "advanced",
+    gender: "male"
+  },
+  {
+    _id: "demo2",
+    fullName: "Priya Verma",
+    username: "priya_iit",
+    bio: "Python & AI/ML specialist, passionate about data science.",
+    skills: ["Python", "AI/ML", "TensorFlow"],
+    avatar: "PV",
+    rating: 4.8,
+    projectCount: 15,
+    location: { city: "Mumbai", country: "IN" },
+    college: { collegeName: "IIT Bombay" },
+    experienceLevel: "intermediate",
+    gender: "female"
+  },
+  {
+    _id: "demo3",
+    fullName: "Alex Chen",
+    username: "alex_iit",
+    bio: "Design enthusiast creating beautiful user experiences.",
+    skills: ["Design", "Figma", "UI/UX"],
+    avatar: "AC",
+    rating: 4.6,
+    projectCount: 8,
+    location: { city: "Mumbai", country: "IN" },
+    college: { collegeName: "IIT Bombay" },
+    experienceLevel: "beginner",
+    gender: "other"
+  },
 
-const demoTeams = [
-  { _id: "t1", name: "ArogyaAI", description: "AI-powered health triage app for rural clinics.", requiredSkills: ["ML", "React", "Node.js"], members: ["Aarav", "Kabir"], maxMembers: 5, city: "Bengaluru" },
-  { _id: "t2", name: "CampusConnect", description: "A platform to connect campus teams for hackathons.", requiredSkills: ["React", "Firebase", "UI"], members: ["Isha"], maxMembers: 4, city: "Ahmedabad" },
-  { _id: "t3", name: "AgriSense", description: "Crop monitoring + alerts for small farmers.", requiredSkills: ["IoT", "ML", "Flutter"], members: ["Nisha"], maxMembers: 6, city: "Punjab" },
-  { _id: "t4", name: "HackKart", description: "Logistics for pop-up hackathon events.", requiredSkills: ["Node.js", "Postgres", "Ops"], members: ["Rohit"], maxMembers: 4, city: "Delhi" },
+  // Delhi University - All combinations
+  {
+    _id: "demo4",
+    fullName: "Ravi Kumar",
+    username: "ravi_du",
+    bio: "Mobile app developer specializing in cross-platform solutions.",
+    skills: ["Mobile", "Flutter", "React Native"],
+    avatar: "RK",
+    rating: 4.7,
+    projectCount: 12,
+    location: { city: "Delhi", country: "IN" },
+    college: { collegeName: "Delhi University" },
+    experienceLevel: "advanced",
+    gender: "male"
+  },
+  {
+    _id: "demo5",
+    fullName: "Sneha Patel",
+    username: "sneha_du",
+    bio: "Backend engineer focused on scalable microservices architecture.",
+    skills: ["Backend", "Java", "Spring Boot"],
+    avatar: "SP",
+    rating: 4.5,
+    projectCount: 10,
+    location: { city: "Delhi", country: "IN" },
+    college: { collegeName: "Delhi University" },
+    experienceLevel: "intermediate",
+    gender: "female"
+  },
+  {
+    _id: "demo6",
+    fullName: "Sam Wilson",
+    username: "sam_du",
+    bio: "Blockchain enthusiast working on DeFi applications.",
+    skills: ["Blockchain", "Solidity", "Web3"],
+    avatar: "SW",
+    rating: 4.3,
+    projectCount: 6,
+    location: { city: "Delhi", country: "IN" },
+    college: { collegeName: "Delhi University" },
+    experienceLevel: "beginner",
+    gender: "other"
+  },
+
+  // SRM University - All combinations
+  {
+    _id: "demo7",
+    fullName: "Manish Singh",
+    username: "manish_srm",
+    bio: "DevOps engineer automating deployment pipelines.",
+    skills: ["DevOps", "Docker", "Kubernetes"],
+    avatar: "MS",
+    rating: 4.8,
+    projectCount: 14,
+    location: { city: "Chennai", country: "IN" },
+    college: { collegeName: "SRM University" },
+    experienceLevel: "advanced",
+    gender: "male"
+  },
+  {
+    _id: "demo8",
+    fullName: "Kavya Reddy",
+    username: "kavya_srm",
+    bio: "Full-stack developer with expertise in MERN stack.",
+    skills: ["React", "Backend", "MongoDB"],
+    avatar: "KR",
+    rating: 4.4,
+    projectCount: 9,
+    location: { city: "Chennai", country: "IN" },
+    college: { collegeName: "SRM University" },
+    experienceLevel: "intermediate",
+    gender: "female"
+  },
+  {
+    _id: "demo9",
+    fullName: "Jordan Lee",
+    username: "jordan_srm",
+    bio: "Python developer interested in machine learning applications.",
+    skills: ["Python", "AI/ML", "Scikit-learn"],
+    avatar: "JL",
+    rating: 4.2,
+    projectCount: 5,
+    location: { city: "Chennai", country: "IN" },
+    college: { collegeName: "SRM University" },
+    experienceLevel: "beginner",
+    gender: "other"
+  },
+
+  // NIT Surat - All combinations
+  {
+    _id: "demo10",
+    fullName: "Vikash Gupta",
+    username: "vikash_nit",
+    bio: "Mobile developer creating innovative iOS and Android apps.",
+    skills: ["Mobile", "Swift", "Kotlin"],
+    avatar: "VG",
+    rating: 4.6,
+    projectCount: 11,
+    location: { city: "Surat", country: "IN" },
+    college: { collegeName: "NIT Surat" },
+    experienceLevel: "advanced",
+    gender: "male"
+  },
+  {
+    _id: "demo11",
+    fullName: "Anita Sharma",
+    username: "anita_nit",
+    bio: "Design professional focusing on user-centered design principles.",
+    skills: ["Design", "Adobe XD", "Prototyping"],
+    avatar: "AN",
+    rating: 4.5,
+    projectCount: 7,
+    location: { city: "Surat", country: "IN" },
+    college: { collegeName: "NIT Surat" },
+    experienceLevel: "intermediate",
+    gender: "female"
+  },
+  {
+    _id: "demo12",
+    fullName: "Taylor Smith",
+    username: "taylor_nit",
+    bio: "Blockchain developer exploring smart contract development.",
+    skills: ["Blockchain", "Ethereum", "DApps"],
+    avatar: "TS",
+    rating: 4.1,
+    projectCount: 4,
+    location: { city: "Surat", country: "IN" },
+    college: { collegeName: "NIT Surat" },
+    experienceLevel: "beginner",
+    gender: "other"
+  },
+
+  // COEP - All combinations
+  {
+    _id: "demo13",
+    fullName: "Arjun Mehta",
+    username: "arjun_coep",
+    bio: "DevOps specialist with expertise in cloud infrastructure.",
+    skills: ["DevOps", "AWS", "Terraform"],
+    avatar: "AM",
+    rating: 4.7,
+    projectCount: 13,
+    location: { city: "Pune", country: "IN" },
+    college: { collegeName: "COEP" },
+    experienceLevel: "advanced",
+    gender: "male"
+  },
+  {
+    _id: "demo14",
+    fullName: "Ishita Jain",
+    username: "ishita_coep",
+    bio: "Backend developer with strong database optimization skills.",
+    skills: ["Backend", "PostgreSQL", "Redis"],
+    avatar: "IJ",
+    rating: 4.4,
+    projectCount: 8,
+    location: { city: "Pune", country: "IN" },
+    college: { collegeName: "COEP" },
+    experienceLevel: "intermediate",
+    gender: "female"
+  },
+  {
+    _id: "demo15",
+    fullName: "River Johnson",
+    username: "river_coep",
+    bio: "Python enthusiast learning about artificial intelligence.",
+    skills: ["Python", "AI/ML", "Pandas"],
+    avatar: "RJ",
+    rating: 4.0,
+    projectCount: 3,
+    location: { city: "Pune", country: "IN" },
+    college: { collegeName: "COEP" },
+    experienceLevel: "beginner",
+    gender: "other"
+  }
 ];
 
 function SkillBadge({ skill }) {
-  return <span className="inline-block text-xs px-3 py-1 mr-2 mb-2 bg-slate-700/40 rounded-full text-slate-300">{skill}</span>;
+  return (
+    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-700 text-slate-300 mr-2 mb-2">
+      {skill}
+    </span>
+  );
 }
 
-function Avatar({ name }) {
-  const initials = name ? name.split(" ").map(s => s[0]).slice(0,2).join("") : "U";
-  return <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center text-white font-semibold">{initials}</div>;
-}
-
-export default function TeamMatching() {
-  const { user, setUser } = useAuth();
-  const [seekers, setSeekers] = useState([]);
-  const [openTeams, setOpenTeams] = useState([]);
-  const [myTeams, setMyTeams] = useState([]);
-  const [invitations, setInvitations] = useState({ sentInvitations: [], receivedInvitations: [] });
-  const [selectedTeamId, setSelectedTeamId] = useState(null);
-  const [filters, setFilters] = useState({ college: "", skills: "", gender: "", location: "", experienceLevel: "", availability: "" });
-  const [loading, setLoading] = useState(false);
-  const [creating, setCreating] = useState(false);
-  const [form, setForm] = useState({ name: "", description: "", requiredSkills: "" });
-  const [prefUpdating, setPrefUpdating] = useState(false);
-  const [hasRealTeam, setHasRealTeam] = useState(false);
-  const [matchingMode, setMatchingMode] = useState("browseTeams");
-
-  useEffect(() => {
-    fetchSeekers();
-    fetchOpenTeams();
-    fetchMyTeams();
-    fetchInvitations();
-  }, []);
-
-  const fetchSeekers = async () => {
-    try {
-      const res = await fetch("/api/team/seekers", { credentials: "include" });
-      if (res.ok) {
-        const data = await res.json();
-        setSeekers(data.length > 0 ? data : demoSeekers);
-      } else {
-        setSeekers(demoSeekers);
-      }
-    } catch (err) {
-      setSeekers(demoSeekers);
-    }
-  };
-
-  const fetchOpenTeams = async () => {
-    try {
-      const res = await fetch("/api/team/open", { credentials: "include" });
-      if (res.ok) {
-        const data = await res.json();
-        setOpenTeams(data.length > 0 ? data : demoTeams);
-      } else {
-        setOpenTeams(demoTeams);
-      }
-    } catch (err) {
-      setOpenTeams(demoTeams);
-    }
-  };
-
-  const fetchMyTeams = async () => {
-    try {
-      const res = await fetch("/api/team/my-teams", { credentials: "include" });
-      if (res.ok) {
-        const data = await res.json();
-        setMyTeams(data);
-        setHasRealTeam(data.length > 0);
-      }
-    } catch (err) {
-      console.error("Failed to fetch teams:", err);
-    }
-  };
-
-  const fetchInvitations = async () => {
-    try {
-      const res = await fetch("/api/team/invitations", { credentials: "include" });
-      if (res.ok) {
-        const data = await res.json();
-        setInvitations(data);
-      }
-    } catch (err) {
-      console.error("Failed to fetch invitations:", err);
-    }
-  };
-
-  const filteredSeekers = seekers.filter((person) => {
-    if (matchingMode !== 'findTeammates') return false;
-    const collegeValue = `${person.college?.collegeName || ''} ${person.college?.degree || ''} ${person.college?.branch || ''}`.toLowerCase();
-    const skillValue = (person.skills || []).join(' ').toLowerCase();
-    const locationValue = `${person.location?.city || ''} ${person.location?.country || ''}`.toLowerCase();
-    
-    return (
-      (!filters.college || collegeValue.includes(filters.college.toLowerCase())) &&
-      (!filters.skills || skillValue.includes(filters.skills.toLowerCase())) &&
-      (!filters.gender || person.gender === filters.gender) &&
-      (!filters.location || locationValue.includes(filters.location.toLowerCase())) &&
-      (!filters.experienceLevel || person.experienceLevel === filters.experienceLevel) &&
-      (!filters.availability || person.availability === filters.availability)
-    );
-  });
-
-  const createTeam = async (e) => {
-    e.preventDefault();
-    if (!form.name.trim()) return;
-
-    setCreating(true);
-    try {
-      const res = await fetch("/api/team", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          name: form.name,
-          description: form.description,
-          requiredSkills: form.requiredSkills.split(",").map(s => s.trim()).filter(Boolean)
-        }),
-      });
-
-      if (res.ok) {
-        setForm({ name: "", description: "", requiredSkills: "" });
-        fetchMyTeams();
-        fetchOpenTeams();
-      }
-    } catch (err) {
-      console.error("Create team error:", err);
-    }
-    setCreating(false);
-  };
-
-  const updateTeamPreference = async () => {
-    if (!selectedTeamId) return;
-    setPrefUpdating(true);
-    try {
-      const res = await fetch("/api/team/preference", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ teamRole: selectedTeamId }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setUser(data.user);
-      }
-    } catch (err) {
-      console.error("Update preference error:", err);
-    }
-    setPrefUpdating(false);
+function Avatar({ initials }) {
+  const colors = {
+    // Original colors
+    RS: "bg-gradient-to-br from-blue-500 to-purple-600",
+    MP: "bg-gradient-to-br from-purple-500 to-pink-600", 
+    PS: "bg-gradient-to-br from-pink-500 to-red-500",
+    AM: "bg-gradient-to-br from-green-500 to-blue-500",
+    SP: "bg-gradient-to-br from-yellow-500 to-orange-500",
+    RK: "bg-gradient-to-br from-red-500 to-pink-500",
+    AG: "bg-gradient-to-br from-emerald-500 to-teal-500",
+    VS: "bg-gradient-to-br from-violet-500 to-purple-500",
+    KR: "bg-gradient-to-br from-cyan-500 to-blue-500",
+    AT: "bg-gradient-to-br from-amber-500 to-orange-500",
+    SJ: "bg-gradient-to-br from-lime-500 to-green-500",
+    // New colors for additional users
+    AS: "bg-gradient-to-br from-indigo-500 to-blue-600",
+    PV: "bg-gradient-to-br from-rose-500 to-pink-600",
+    AC: "bg-gradient-to-br from-teal-500 to-cyan-500",
+    MS: "bg-gradient-to-br from-orange-500 to-red-500",
+    JL: "bg-gradient-to-br from-purple-600 to-indigo-600",
+    VG: "bg-gradient-to-br from-green-600 to-emerald-600",
+    AN: "bg-gradient-to-br from-pink-600 to-rose-600",
+    TS: "bg-gradient-to-br from-blue-600 to-cyan-600",
+    IJ: "bg-gradient-to-br from-violet-600 to-purple-600",
+    RJ: "bg-gradient-to-br from-emerald-600 to-teal-600",
+    SW: "bg-gradient-to-br from-slate-600 to-gray-600"
   };
 
   return (
-    <div className="space-y-6">
-      {/* Mode Selection */}
-      <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/40 rounded-2xl p-6 shadow-xl">
-        <div className="flex flex-wrap gap-3">
-          <button
-            onClick={() => setMatchingMode("browseTeams")}
-            className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
-              matchingMode === "browseTeams"
-                ? "bg-gradient-to-r from-indigo-500 to-blue-600 text-white shadow-lg"
-                : "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 hover:text-white"
-            }`}
+    <div className={`w-12 h-12 rounded-full ${colors[initials] || 'bg-gradient-to-br from-indigo-500 to-purple-600'} flex items-center justify-center text-white font-bold text-sm shadow-lg`}>
+      {initials}
+    </div>
+  );
+}
+
+export default function TeamMatching() {
+  const { user } = useAuth();
+  const [teammates, setTeammates] = useState(demoTeammates);
+  const [filteredTeammates, setFilteredTeammates] = useState(demoTeammates);
+  const [filters, setFilters] = useState({
+    skills: [],
+    college: "Any College",
+    experienceLevel: "Any Level", 
+    gender: "Any Gender"
+  });
+
+  const skillOptions = ["React", "Python", "AI/ML", "Design", "Mobile", "Backend", "Blockchain", "DevOps"];
+  const collegeOptions = ["Any College", "IIT Bombay", "Delhi University", "SRM University", "NIT Surat", "COEP"];
+  const experienceLevels = ["Any Level", "beginner", "intermediate", "advanced"];
+  const genderOptions = ["Any Gender", "male", "female", "other"];
+
+  useEffect(() => {
+    fetchTeammates();
+  }, []);
+
+  const fetchTeammates = async () => {
+    try {
+      console.log("Fetching teammates...");
+      const res = await fetch("/api/team/teammates", { credentials: "include" });
+      
+      if (res.ok) {
+        const data = await res.json();
+        console.log("Fetched teammates:", data.length, "teammates");
+        
+        if (data.length > 0) {
+          setTeammates(data);
+          setFilteredTeammates(data);
+        } else {
+          console.log("No real teammates found, using demo data");
+          setTeammates(demoTeammates);
+          setFilteredTeammates(demoTeammates);
+        }
+      } else {
+        console.log("API call failed, using demo data");
+        const errorData = await res.json().catch(() => ({}));
+        console.error("API error:", errorData);
+        setTeammates(demoTeammates);
+        setFilteredTeammates(demoTeammates);
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+      setTeammates(demoTeammates);
+      setFilteredTeammates(demoTeammates);
+    }
+  };
+
+  const handleSkillToggle = (skill) => {
+    setFilters(prev => ({
+      ...prev,
+      skills: prev.skills.includes(skill) 
+        ? prev.skills.filter(s => s !== skill)
+        : [...prev.skills, skill]
+    }));
+  };
+
+  const handleFilterChange = (key, value) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  useEffect(() => {
+    let filtered = teammates;
+
+    if (filters.skills.length > 0) {
+      filtered = filtered.filter(teammate => 
+        filters.skills.some(skill => teammate.skills.includes(skill))
+      );
+    }
+
+    if (filters.college !== "Any College") {
+      filtered = filtered.filter(teammate => 
+        teammate.college?.collegeName === filters.college
+      );
+    }
+
+    if (filters.experienceLevel !== "Any Level") {
+      filtered = filtered.filter(teammate => 
+        teammate.experienceLevel === filters.experienceLevel
+      );
+    }
+
+    if (filters.gender !== "Any Gender") {
+      filtered = filtered.filter(teammate => 
+        teammate.gender === filters.gender
+      );
+    }
+
+    setFilteredTeammates(filtered);
+  }, [filters, teammates]);
+
+  const sendCollaborationRequest = async (teammateId) => {
+    try {
+      console.log("Sending collaboration request to:", teammateId);
+      
+      const res = await fetch(`/api/team/collaborate/${teammateId}`, {
+        method: "POST",
+        credentials: "include"
+      });
+      
+      const data = await res.json();
+      console.log("Response:", data);
+      
+      if (res.ok && data.success) {
+        alert("Collaboration request sent successfully! 🎉");
+      } else {
+        alert(data.message || "Failed to send collaboration request");
+      }
+    } catch (err) {
+      console.error("Failed to send collaboration request:", err);
+      alert("Network error: Failed to send collaboration request");
+    }
+  };
+
+  return (
+    <div className="flex h-full bg-slate-900 text-white">
+      {/* Sidebar Filters */}
+      <div className="w-80 bg-slate-800 p-6 border-r border-slate-700">
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mb-2">Find Teammates</h2>
+        </div>
+
+        {/* Skills Filter */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-4 text-slate-200">Skills</h3>
+          <div className="flex flex-wrap gap-2">
+            {skillOptions.map(skill => (
+              <button
+                key={skill}
+                onClick={() => handleSkillToggle(skill)}
+                className={`px-3 py-2 rounded-full text-sm font-medium transition-all ${
+                  filters.skills.includes(skill)
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                }`}
+              >
+                {skill}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* College Filter */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-3 text-slate-200">College</h3>
+          <select
+            value={filters.college}
+            onChange={(e) => handleFilterChange('college', e.target.value)}
+            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            Browse Teams
-          </button>
-          <button
-            onClick={() => setMatchingMode("findTeammates")}
-            className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
-              matchingMode === "findTeammates"
-                ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg"
-                : "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 hover:text-white"
-            }`}
+            {collegeOptions.map(college => (
+              <option key={college} value={college}>{college}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Experience Level Filter */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-3 text-slate-200">Experience Level</h3>
+          <select
+            value={filters.experienceLevel}
+            onChange={(e) => handleFilterChange('experienceLevel', e.target.value)}
+            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            Find Teammates
-          </button>
-          <button
-            onClick={() => setMatchingMode("myTeams")}
-            className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
-              matchingMode === "myTeams"
-                ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg"
-                : "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 hover:text-white"
-            }`}
+            {experienceLevels.map(level => (
+              <option key={level} value={level}>{level}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Gender Filter */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-3 text-slate-200">Gender</h3>
+          <select
+            value={filters.gender}
+            onChange={(e) => handleFilterChange('gender', e.target.value)}
+            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            My Teams
-          </button>
+            {genderOptions.map(gender => (
+              <option key={gender} value={gender}>{gender}</option>
+            ))}
+          </select>
         </div>
       </div>
 
-      {matchingMode === "browseTeams" && (
-        <div className="space-y-6">
-          {/* Team Creation Form */}
-          <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/40 rounded-2xl p-6 shadow-xl">
-            <h3 className="text-xl font-bold text-white mb-4">Create New Team</h3>
-            <form onSubmit={createTeam} className="space-y-4">
-              <input
-                type="text"
-                placeholder="Team name"
-                value={form.name}
-                onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-              <textarea
-                placeholder="Team description"
-                value={form.description}
-                onChange={(e) => setForm(prev => ({ ...prev, description: e.target.value }))}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
-                rows="3"
-              />
-              <input
-                type="text"
-                placeholder="Required skills (comma-separated)"
-                value={form.requiredSkills}
-                onChange={(e) => setForm(prev => ({ ...prev, requiredSkills: e.target.value }))}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-              <button
-                type="submit"
-                disabled={creating}
-                className="w-full px-6 py-3 bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-xl hover:from-indigo-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium"
-              >
-                {creating ? "Creating..." : "Create Team"}
-              </button>
-            </form>
+      {/* Main Content */}
+      <div className="flex-1 p-6">
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-4">
+            <h1 className="text-3xl font-bold">Team Matching 🤝</h1>
           </div>
-
-          {/* Open Teams */}
-          <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/40 rounded-2xl p-6 shadow-xl">
-            <h3 className="text-xl font-bold text-white mb-6">Open Teams</h3>
-            <div className="grid gap-4">
-              {openTeams.map((team) => (
-                <div key={team._id} className="bg-slate-700/30 rounded-xl p-5 hover:bg-slate-700/50 transition-all duration-200 border border-slate-600/30">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h4 className="text-lg font-semibold text-white">{team.name}</h4>
-                      <p className="text-slate-300 text-sm mt-1">{team.description}</p>
-                    </div>
-                    <span className="text-xs px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full">
-                      {team.members?.length || 0}/{team.maxMembers} members
-                    </span>
-                  </div>
-                  <div className="mb-3">
-                    {team.requiredSkills?.map(skill => (
-                      <SkillBadge key={skill} skill={skill} />
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p className="text-slate-400 text-sm">📍 {team.city}</p>
-                    <button className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-all duration-200 text-sm font-medium">
-                      Join Team
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <p className="text-slate-400">Connect with talented individuals for your next project</p>
         </div>
-      )}
 
-      {matchingMode === "findTeammates" && (
-        <div className="space-y-6">
-          {/* Filters */}
-          <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/40 rounded-2xl p-6 shadow-xl">
-            <h3 className="text-xl font-bold text-white mb-4">Filter Teammates</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <input
-                type="text"
-                placeholder="College"
-                value={filters.college}
-                onChange={(e) => setFilters(prev => ({ ...prev, college: e.target.value }))}
-                className="px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-              <input
-                type="text"
-                placeholder="Skills"
-                value={filters.skills}
-                onChange={(e) => setFilters(prev => ({ ...prev, skills: e.target.value }))}
-                className="px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-              <select
-                value={filters.experienceLevel}
-                onChange={(e) => setFilters(prev => ({ ...prev, experienceLevel: e.target.value }))}
-                className="px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-              >
-                <option value="">All Experience Levels</option>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
-              </select>
-            </div>
-          </div>
+        <div className="mb-6">
+          <h2 className="text-xl font-bold mb-4">
+            All Available Teammates ({filteredTeammates.length} found)
+          </h2>
+          <div className="grid gap-4">
+            {filteredTeammates.map((teammate) => (
+              <div key={teammate._id} className="bg-slate-800 rounded-xl p-6 hover:bg-slate-750 transition-all duration-200 border border-slate-700">
+                <div className="flex items-start gap-4">
+                  <Avatar initials={teammate.avatar} />
+                  
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 className="text-xl font-bold text-white">{teammate.fullName}</h3>
+                        <p className="text-slate-400 text-sm">
+                          @{teammate.username} • {teammate.experienceLevel || 'Not specified'} level
+                        </p>
+                      </div>
+                      
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-1">
+                          <span className="text-yellow-400">⭐</span>
+                          <span className="font-semibold">{teammate.rating}</span>
+                        </div>
+                        <div className="text-sm text-slate-400">
+                          {teammate.projectCount} projects
+                        </div>
+                      </div>
+                    </div>
 
-          {/* Teammates Grid */}
-          <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/40 rounded-2xl p-6 shadow-xl">
-            <h3 className="text-xl font-bold text-white mb-6">Available Teammates</h3>
-            <div className="grid gap-4">
-              {filteredSeekers.map((person) => (
-                <div key={person._id} className="bg-slate-700/30 rounded-xl p-5 hover:bg-slate-700/50 transition-all duration-200 border border-slate-600/30">
-                  <div className="flex items-start gap-4">
-                    <Avatar name={person.fullName} />
-                    <div className="flex-1">
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <h4 className="text-lg font-semibold text-white">{person.fullName}</h4>
-                          <p className="text-slate-400 text-sm">@{person.username}</p>
+                    <div className="flex items-center gap-4 mb-3 text-sm text-slate-400">
+                      <div className="flex items-center gap-1">
+                        <span>📍</span>
+                        <span>{teammate.location?.city || 'Location not set'}, {teammate.location?.country || 'IN'}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span>🎓</span>
+                        <span>{teammate.college?.collegeName || 'College not set'}</span>
+                      </div>
+                      {teammate.gender && (
+                        <div className="flex items-center gap-1">
+                          <span>👤</span>
+                          <span className="capitalize">{teammate.gender}</span>
                         </div>
-                        <span className={`text-xs px-3 py-1 rounded-full ${
-                          person.experienceLevel === 'advanced' ? 'bg-emerald-500/20 text-emerald-300' :
-                          person.experienceLevel === 'intermediate' ? 'bg-yellow-500/20 text-yellow-300' :
-                          'bg-blue-500/20 text-blue-300'
-                        }`}>
-                          {person.experienceLevel}
-                        </span>
-                      </div>
-                      <p className="text-slate-300 mb-3">{person.bio}</p>
-                      <div className="mb-3">
-                        {person.skills?.map(skill => (
-                          <SkillBadge key={skill} skill={skill} />
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="text-slate-400 text-sm">
-                          <span>📍 {person.location?.city}, {person.location?.country}</span>
-                          <span className="ml-4">🎓 {person.college?.collegeName}</span>
-                        </div>
-                        <button className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-200 text-sm font-medium">
-                          Invite
-                        </button>
-                      </div>
+                      )}
+                    </div>
+
+                    <p className="text-slate-300 mb-4 leading-relaxed">
+                      {teammate.bio || 'No bio available'}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {(teammate.skills || []).map(skill => (
+                        <SkillBadge key={skill} skill={skill} />
+                      ))}
+                      {(!teammate.skills || teammate.skills.length === 0) && (
+                        <span className="text-slate-500 text-sm">No skills listed</span>
+                      )}
+                    </div>
+
+                    <div className="flex justify-end">
+                      <button
+                        onClick={() => sendCollaborationRequest(teammate._id)}
+                        className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-all duration-200 flex items-center gap-2"
+                      >
+                        <span>📤</span>
+                        Request Collaboration
+                      </button>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+
+            {filteredTeammates.length === 0 && (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-xl font-bold text-slate-300 mb-2">No teammates found</h3>
+                <p className="text-slate-500">Try adjusting your filters to find more matches</p>
+              </div>
+            )}
           </div>
         </div>
-      )}
-
-      {matchingMode === "myTeams" && (
-        <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/40 rounded-2xl p-6 shadow-xl">
-          <h3 className="text-xl font-bold text-white mb-6">My Teams</h3>
-          {myTeams.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-slate-400 mb-4">You haven't created any teams yet.</p>
-              <button
-                onClick={() => setMatchingMode("browseTeams")}
-                className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-xl hover:from-indigo-600 hover:to-blue-700 transition-all duration-200 font-medium"
-              >
-                Create Your First Team
-              </button>
-            </div>
-          ) : (
-            <div className="grid gap-4">
-              {myTeams.map((team) => (
-                <div key={team._id} className="bg-slate-700/30 rounded-xl p-5 border border-slate-600/30">
-                  <h4 className="text-lg font-semibold text-white mb-2">{team.name}</h4>
-                  <p className="text-slate-300 mb-3">{team.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 text-sm">
-                      {team.members?.length || 0}/{team.maxMembers} members
-                    </span>
-                    <span className={`text-xs px-3 py-1 rounded-full ${
-                      team.status === 'open' ? 'bg-emerald-500/20 text-emerald-300' :
-                      'bg-red-500/20 text-red-300'
-                    }`}>
-                      {team.status}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+      </div>
     </div>
   );
 }

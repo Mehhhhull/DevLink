@@ -156,6 +156,56 @@ export default function IdeaHub() {
   const [newComment, setNewComment] = useState("");
   const [userLikes, setUserLikes] = useState({});
   const [userStars, setUserStars] = useState({});
+  const [formData, setFormData] = useState({
+    title: "",
+    summary: "", 
+    details: "",
+    techStack: "",
+    category: "Web Dev"
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
+
+  // Load ideas from backend on component mount
+  useEffect(() => {
+    loadIdeas();
+  }, []);
+
+  const loadIdeas = async () => {
+    try {
+      const response = await fetch('/api/ideas', {
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && data.data) {
+          // Combine backend ideas with sample ideas
+          const backendIdeas = data.data.map(idea => ({
+            ...idea,
+            category: idea.category || categorizeIdea(idea.techStack)
+          }));
+          setIdeas([...backendIdeas, ...sampleIdeas]);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load ideas:', error);
+      // Keep using sample ideas if backend fails
+    }
+  };
+
+  // Categorize idea based on tech stack
+  const categorizeIdea = (techStack) => {
+    if (!techStack || !Array.isArray(techStack)) return "Web Dev";
+    
+    const tech = techStack.join(" ").toLowerCase();
+    if (tech.includes("react native") || tech.includes("flutter") || tech.includes("swift") || tech.includes("kotlin")) return "Mobile";
+    if (tech.includes("ai") || tech.includes("ml") || tech.includes("machine learning") || tech.includes("openai")) return "AI/ML";
+    if (tech.includes("blockchain") || tech.includes("solidity") || tech.includes("web3") || tech.includes("ethereum")) return "Blockchain";
+    if (tech.includes("arduino") || tech.includes("iot") || tech.includes("sensors") || tech.includes("raspberry pi")) return "IoT";
+    if (tech.includes("unity") || tech.includes("game") || tech.includes("vr") || tech.includes("ar")) return "Game Dev";
+    return "Web Dev";
+  };
 
   // Load saved likes and stars from localStorage
   useEffect(() => {
@@ -247,6 +297,78 @@ export default function IdeaHub() {
   const getComments = (ideaId) => {
     const savedComments = JSON.parse(localStorage.getItem('ideaComments') || '{}');
     return savedComments[ideaId] || [];
+  };
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    setFormError("");
+  };
+
+  const handleSubmitIdea = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setFormError("");
+
+    // Validation
+    if (!formData.title.trim() || !formData.summary.trim() || !formData.details.trim()) {
+      setFormError("Title, summary, and details are required.");
+      setSubmitting(false);
+      return;
+    }
+
+    try {
+      const techStackArray = formData.techStack
+        .split(',')
+        .map(tech => tech.trim())
+        .filter(tech => tech.length > 0);
+
+      const response = await fetch('/api/ideas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          title: formData.title.trim(),
+          summary: formData.summary.trim(),
+          details: formData.details.trim(),
+          techStack: techStackArray
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // Add the new idea to the list with category
+        const newIdea = {
+          ...data.data,
+          category: formData.category
+        };
+        
+        setIdeas(prev => [newIdea, ...prev]);
+        
+        // Reset form and close modal
+        setFormData({
+          title: "",
+          summary: "",
+          details: "",
+          techStack: "",
+          category: "Web Dev"
+        });
+        setShowAddModal(false);
+      } else {
+        setFormError(data.message || "Failed to create idea. Please try again.");
+      }
+    } catch (error) {
+      console.error('Error submitting idea:', error);
+      setFormError("Network error. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -509,19 +631,144 @@ export default function IdeaHub() {
       {/* Add New Idea Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-900 border border-slate-700 rounded-lg max-w-2xl w-full p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-white">Add New Idea</h2>
-              <button
-                onClick={() => setShowAddModal(false)}
-                className="text-slate-400 hover:text-white"
-              >
-                <XMarkIcon className="w-6 h-6" />
-              </button>
-            </div>
-            <div className="text-center py-8">
-              <p className="text-slate-400">Add new idea form coming soon...</p>
-            </div>
+          <div className="bg-slate-900 border border-slate-700 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <form onSubmit={handleSubmitIdea} className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-white">Add New Idea</h2>
+                <button
+                  type="button"
+                  onClick={() => setShowAddModal(false)}
+                  className="text-slate-400 hover:text-white"
+                >
+                  <XMarkIcon className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {/* Title */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Title <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleFormChange}
+                    placeholder="Enter your idea title (max 150 characters)"
+                    maxLength={150}
+                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500"
+                    required
+                  />
+                  <div className="text-xs text-slate-500 mt-1">
+                    {formData.title.length}/150 characters
+                  </div>
+                </div>
+
+                {/* Category */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Category
+                  </label>
+                  <select
+                    name="category"
+                    value={formData.category}
+                    onChange={handleFormChange}
+                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-indigo-500"
+                  >
+                    <option value="Web Dev">Web Dev</option>
+                    <option value="Mobile">Mobile</option>
+                    <option value="AI/ML">AI/ML</option>
+                    <option value="Blockchain">Blockchain</option>
+                    <option value="IoT">IoT</option>
+                    <option value="Game Dev">Game Dev</option>
+                  </select>
+                </div>
+
+                {/* Summary */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Summary <span className="text-red-400">*</span>
+                  </label>
+                  <textarea
+                    name="summary"
+                    value={formData.summary}
+                    onChange={handleFormChange}
+                    placeholder="Brief description of your idea (max 350 characters)"
+                    maxLength={350}
+                    rows={3}
+                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500"
+                    required
+                  />
+                  <div className="text-xs text-slate-500 mt-1">
+                    {formData.summary.length}/350 characters
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Detailed Description <span className="text-red-400">*</span>
+                  </label>
+                  <textarea
+                    name="details"
+                    value={formData.details}
+                    onChange={handleFormChange}
+                    placeholder="Detailed explanation of the problem statement, expected solution, and implementation approach (max 5000 characters)"
+                    maxLength={5000}
+                    rows={6}
+                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500"
+                    required
+                  />
+                  <div className="text-xs text-slate-500 mt-1">
+                    {formData.details.length}/5000 characters
+                  </div>
+                </div>
+
+                {/* Tech Stack */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Tech Stack
+                  </label>
+                  <input
+                    type="text"
+                    name="techStack"
+                    value={formData.techStack}
+                    onChange={handleFormChange}
+                    placeholder="React, Node.js, MongoDB, etc. (comma-separated)"
+                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500"
+                  />
+                  <div className="text-xs text-slate-500 mt-1">
+                    Separate multiple technologies with commas
+                  </div>
+                </div>
+
+                {/* Error Message */}
+                {formError && (
+                  <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+                    <p className="text-red-300 text-sm">{formError}</p>
+                  </div>
+                )}
+
+                {/* Submit Buttons */}
+                <div className="flex items-center gap-3 pt-4">
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-600 text-white rounded-lg transition-colors disabled:cursor-not-allowed"
+                  >
+                    {submitting ? "Creating..." : "Create Idea"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowAddModal(false)}
+                    className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       )}
