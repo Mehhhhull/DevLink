@@ -4,7 +4,9 @@ const teamInvitationSchema = new mongoose.Schema({
   team: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Team",
-    required: true,
+    required: function() {
+      return this.type !== "collaboration";
+    },
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -15,6 +17,11 @@ const teamInvitationSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
+  },
+  type: {
+    type: String,
+    enum: ["team", "collaboration"],
+    default: "team",
   },
   status: {
     type: String,

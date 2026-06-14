@@ -214,6 +214,84 @@ export const respondToInvitation = async (req, res) => {
   }
 };
 
+export const getTeammates = async (req, res) => {
+  try {
+    // More lenient query - show all users except current user
+    const teammates = await User.find({ 
+      _id: { $ne: req.user._id }
+    }).select(
+      "username fullName email bio skills techStack preferredRoles experienceLevel availability location socials college avatar projects hackathonHistory gender teamRole onboardingCompleted"
+    );
+
+    console.log(`Found ${teammates.length} potential teammates`);
+
+    // Add computed fields for better UI
+    const enhancedTeammates = teammates.map(teammate => ({
+      ...teammate.toObject(),
+      avatar: teammate.fullName ? teammate.fullName.split(" ").map(s => s[0]).slice(0,2).join("") : "U",
+      rating: (Math.random() * 1 + 4).toFixed(1), // Mock rating between 4.0-5.0
+      projectCount: teammate.projects ? teammate.projects.length : Math.floor(Math.random() * 15) + 1
+    }));
+
+    return res.status(200).json(enhancedTeammates);
+  } catch (error) {
+    console.error("Fetch teammates error:", error);
+    return res.status(500).json({ message: `Fetch teammates error ${error}` });
+  }
+};
+
+export const sendCollaborationRequest = async (req, res) => {
+  try {
+    const { teammateId } = req.params;
+
+    console.log("Collaboration request:", { teammateId, userId: req.user._id });
+
+    if (!teammateId) {
+      return res.status(400).json({ message: "Teammate ID is required" });
+    }
+
+    const teammate = await User.findById(teammateId);
+    if (!teammate) {
+      return res.status(404).json({ message: "Teammate not found" });
+    }
+
+    if (teammate._id.toString() === req.user._id.toString()) {
+      return res.status(400).json({ message: "You cannot send a collaboration request to yourself" });
+    }
+
+    // Check if invitation already exists
+    const existingInvite = await TeamInvitation.findOne({ 
+      invitedBy: req.user._id, 
+      user: teammateId,
+      type: "collaboration",
+      status: "pending"
+    });
+
+    if (existingInvite) {
+      return res.status(400).json({ message: "Collaboration request already sent" });
+    }
+
+    // Create collaboration invitation
+    const invitation = await TeamInvitation.create({
+      user: teammateId,
+      invitedBy: req.user._id,
+      type: "collaboration",
+      status: "pending"
+    });
+
+    console.log("Collaboration invitation created:", invitation);
+
+    return res.status(201).json({ 
+      success: true,
+      message: "Collaboration request sent successfully",
+      invitation 
+    });
+  } catch (error) {
+    console.error("Send collaboration request error:", error);
+    return res.status(500).json({ message: `Send collaboration request error: ${error.message}` });
+  }
+};
+
 export const deleteTeam = async (req, res) => {
   try {
     const { teamId } = req.params;

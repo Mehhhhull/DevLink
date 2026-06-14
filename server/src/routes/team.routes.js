@@ -6,6 +6,8 @@ import {
   getCreatorTeams,
   getOpenTeams,
   getTeamSeekers,
+  getTeammates,
+  sendCollaborationRequest,
   inviteSeeker,
   getInvitations,
   respondToInvitation,
@@ -17,6 +19,8 @@ const teamRouter = express.Router();
 
 teamRouter.post("/preference", authMiddleware, setTeamPreference);
 teamRouter.post("/create", authMiddleware, createTeam);
+teamRouter.get("/teammates", authMiddleware, getTeammates);
+teamRouter.post("/collaborate/:teammateId", authMiddleware, sendCollaborationRequest);
 teamRouter.get("/seekers", authMiddleware, getTeamSeekers);
 teamRouter.get("/my-teams", authMiddleware, getCreatorTeams);
 teamRouter.get("/open", authMiddleware, getOpenTeams);
