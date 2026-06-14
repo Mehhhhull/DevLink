@@ -75,23 +75,31 @@ export default function Onboarding() {
     e.preventDefault();
     setLoading(true);
     setError("");
+    
+    // Basic validation
+    if (!form.username.trim()) {
+      setError("Username is required");
+      setLoading(false);
+      return;
+    }
+    
     try {
       const payload = {
-        username: form.username,
+        username: form.username.trim(),
         gender: form.gender,
         college: {
-          collegeName: form.collegeName,
-          degree: form.degree,
-          branch: form.branch,
+          collegeName: form.collegeName.trim(),
+          degree: form.degree.trim(),
+          branch: form.branch.trim(),
           graduationYear: form.graduationYear ? Number(form.graduationYear) : undefined,
         },
         skills: form.skills.split(",").map(s=>s.trim()).filter(Boolean),
-        bio: form.bio,
-        github: form.github,
-        linkedin: form.linkedin,
-        x: form.x,
-        portfolio: form.portfolio,
-        projects: form.projects.split(",").map(title=>({ title: title.trim() })).filter(Boolean),
+        bio: form.bio.trim(),
+        github: form.github.trim(),
+        linkedin: form.linkedin.trim(),
+        x: form.x.trim(),
+        portfolio: form.portfolio.trim(),
+        projects: form.projects.split(",").map(title=>({ title: title.trim() })).filter(p=>p.title),
       };
 
       const res = await fetch("/api/auth/complete-onboarding", {
@@ -103,11 +111,14 @@ export default function Onboarding() {
 
       if (!res.ok) {
         const data = await res.json().catch(()=>({}));
-        throw new Error(data.message || "Onboarding failed");
+        throw new Error(data.message || `Server error: ${res.status}`);
       }
 
+      const updatedUser = await res.json();
+      console.log('Onboarding completed:', updatedUser);
       navigate("/");
     } catch (err) {
+      console.error('Onboarding error:', err);
       setError(err.message || "Submission failed");
     } finally {
       setLoading(false);
@@ -126,8 +137,9 @@ export default function Onboarding() {
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm text-slate-300">Full name</label>
-            <input name="username" value={form.username} onChange={handleChange} className="mt-1 w-full rounded-md p-2 bg-slate-800 border border-slate-700" placeholder="username or handle" />
+            <label className="block text-sm text-slate-300">Username (Display Name)</label>
+            <input name="username" value={form.username} onChange={handleChange} className="mt-1 w-full rounded-md p-2 bg-slate-800 border border-slate-700" placeholder="shubham_dev" required />
+            <p className="text-xs text-slate-400 mt-1">This will be your public display name</p>
           </div>
 
           <div>

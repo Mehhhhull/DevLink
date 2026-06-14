@@ -1,45 +1,191 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { SparklesIcon } from "@heroicons/react/24/outline";
+import { SparklesIcon, ChartBarIcon, CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-// Helper function to format the AI evaluation result
-const formatEvaluationResult = (result) => {
-  if (typeof result === 'string') return result;
-  if (!result || typeof result !== 'object') return "Evaluation complete";
+// Beautiful Score Bar Component
+const ScoreBar = ({ label, score, maxScore = 10, color = "purple" }) => {
+  const percentage = (score / maxScore) * 100;
+  const colorClasses = {
+    purple: "bg-purple-500",
+    blue: "bg-blue-500", 
+    green: "bg-green-500",
+    yellow: "bg-yellow-500",
+    red: "bg-red-500"
+  };
+
+  const getScoreColor = (score) => {
+    if (score >= 8) return "green";
+    if (score >= 6) return "yellow";
+    if (score >= 4) return "blue";
+    return "red";
+  };
+
+  const scoreColor = getScoreColor(score);
+  
+  return (
+    <div className="space-y-2">
+      <div className="flex justify-between items-center">
+        <span className="text-sm font-medium text-slate-200 capitalize">{label}</span>
+        <span className="text-sm font-bold text-white">{score}/{maxScore}</span>
+      </div>
+      <div className="w-full bg-slate-700 rounded-full h-2.5">
+        <div 
+          className={`h-2.5 rounded-full transition-all duration-1000 ease-out ${colorClasses[scoreColor]}`}
+          style={{ width: `${percentage}%` }}
+        ></div>
+      </div>
+    </div>
+  );
+};
+
+// Enhanced Evaluation Display Component
+const EvaluationDisplay = ({ result }) => {
+  if (typeof result === 'string') {
+    return <div className="text-slate-300 whitespace-pre-wrap">{result}</div>;
+  }
+
+  if (!result || typeof result !== 'object') {
+    return <div className="text-slate-300">Evaluation complete</div>;
+  }
 
   const { overallScore, evaluations, summary } = result;
   
-  let formatted = `🏆 Overall Score: ${overallScore}/10\n\n`;
-  
-  if (evaluations) {
-    formatted += "📊 Detailed Evaluation:\n\n";
-    
-    Object.entries(evaluations).forEach(([criteria, data]) => {
-      if (data && !data.error) {
-        formatted += `• ${criteria.toUpperCase()}: ${data.score}/10\n`;
-        if (data.judgeReasoning) {
-          formatted += `  ${data.judgeReasoning}\n`;
-        }
-        if (data.strengths && data.strengths.length > 0) {
-          formatted += `  ✅ Strengths: ${data.strengths.join(', ')}\n`;
-        }
-        if (data.weaknesses && data.weaknesses.length > 0) {
-          formatted += `  ⚠️ Areas to improve: ${data.weaknesses.join(', ')}\n`;
-        }
-        formatted += '\n';
-      }
-    });
-  }
-  
-  if (summary && !summary.error) {
-    formatted += "🎯 Judge Summary:\n\n";
-    if (summary.overallVerdict) formatted += `Verdict: ${summary.overallVerdict}\n`;
-    if (summary.biggestStrength) formatted += `💪 Biggest Strength: ${summary.biggestStrength}\n`;
-    if (summary.biggestWeakness) formatted += `🔧 Main Improvement: ${summary.biggestWeakness}\n`;
-    if (summary.winningProbability) formatted += `🏆 Winning Probability: ${summary.winningProbability}\n`;
-  }
-  
-  return formatted;
+  return (
+    <div className="space-y-6">
+      {/* Overall Score Header */}
+      <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-4 border border-purple-500/30">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
+            <ChartBarIcon className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-white">Overall Score</h3>
+            <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+              {overallScore}/10
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Detailed Scores */}
+      {evaluations && (
+        <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+          <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            📊 Detailed Evaluation
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {Object.entries(evaluations).map(([criteria, data]) => {
+              if (data && !data.error) {
+                return (
+                  <div key={criteria} className="space-y-3">
+                    <ScoreBar label={criteria} score={data.score} />
+                    
+                    {/* Reasoning */}
+                    {data.judgeReasoning && (
+                      <div className="bg-slate-700/50 rounded-lg p-3">
+                        <p className="text-xs text-slate-300 leading-relaxed">
+                          {data.judgeReasoning}
+                        </p>
+                      </div>
+                    )}
+                    
+                    {/* Strengths */}
+                    {data.strengths && data.strengths.length > 0 && (
+                      <div className="space-y-2">
+                        <h5 className="text-xs font-medium text-green-400 flex items-center gap-1">
+                          <CheckCircleIcon className="w-3 h-3" />
+                          Strengths
+                        </h5>
+                        <ul className="space-y-1">
+                          {data.strengths.slice(0, 2).map((strength, idx) => (
+                            <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
+                              <span className="text-green-400 mt-1">•</span>
+                              {strength}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
+                    {/* Weaknesses */}
+                    {data.weaknesses && data.weaknesses.length > 0 && (
+                      <div className="space-y-2">
+                        <h5 className="text-xs font-medium text-yellow-400 flex items-center gap-1">
+                          <ExclamationTriangleIcon className="w-3 h-3" />
+                          Areas to Improve
+                        </h5>
+                        <ul className="space-y-1">
+                          {data.weaknesses.slice(0, 2).map((weakness, idx) => (
+                            <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
+                              <span className="text-yellow-400 mt-1">•</span>
+                              {weakness}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              return null;
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Judge Summary */}
+      {summary && !summary.error && (
+        <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/40 rounded-xl p-6 border border-slate-600">
+          <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            🎯 Judge Summary
+          </h4>
+          <div className="space-y-4">
+            {summary.overallVerdict && (
+              <div>
+                <h5 className="text-sm font-medium text-slate-300 mb-2">Verdict</h5>
+                <p className="text-sm text-white bg-slate-700/50 rounded-lg p-3">{summary.overallVerdict}</p>
+              </div>
+            )}
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {summary.biggestStrength && (
+                <div>
+                  <h5 className="text-sm font-medium text-green-400 mb-2 flex items-center gap-1">
+                    💪 Biggest Strength
+                  </h5>
+                  <p className="text-xs text-slate-300 bg-green-500/10 border border-green-500/20 rounded-lg p-3">
+                    {summary.biggestStrength}
+                  </p>
+                </div>
+              )}
+              
+              {summary.biggestWeakness && (
+                <div>
+                  <h5 className="text-sm font-medium text-yellow-400 mb-2 flex items-center gap-1">
+                    🔧 Main Improvement
+                  </h5>
+                  <p className="text-xs text-slate-300 bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
+                    {summary.biggestWeakness}
+                  </p>
+                </div>
+              )}
+            </div>
+            
+            {summary.winningProbability && (
+              <div>
+                <h5 className="text-sm font-medium text-purple-400 mb-2 flex items-center gap-1">
+                  🏆 Winning Probability
+                </h5>
+                <p className="text-sm font-semibold text-white bg-purple-500/20 border border-purple-500/30 rounded-lg p-3">
+                  {summary.winningProbability}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default function AIJudge() {
@@ -73,7 +219,7 @@ export default function AIJudge() {
       const data = await res.json();
       const aiMessage = {
         type: "ai",
-        text: formatEvaluationResult(data.evaluationResult || data.message || "Evaluation complete"),
+        component: <EvaluationDisplay result={data.evaluationResult || data.message} />,
       };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (err) {
@@ -128,17 +274,21 @@ export default function AIJudge() {
                   className={`flex ${msg.type === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[80%] px-4 py-3 rounded-2xl ${
+                    className={`max-w-[90%] ${
                       msg.type === "user"
-                        ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-3 rounded-2xl"
                         : msg.type === "error"
-                        ? "bg-gradient-to-r from-red-500/20 to-red-600/20 text-red-300 border border-red-500/30"
-                        : "bg-slate-700/50 text-slate-100 border border-slate-600/30"
+                        ? "bg-gradient-to-r from-red-500/20 to-red-600/20 text-red-300 border border-red-500/30 px-4 py-3 rounded-2xl"
+                        : "w-full" // AI messages take full width for rich components
                     }`}
                   >
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
-                      {msg.text}
-                    </p>
+                    {msg.component ? (
+                      msg.component
+                    ) : (
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+                        {msg.text}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))

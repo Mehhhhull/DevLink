@@ -104,7 +104,7 @@ export default function Dashboard() {
                     {user?.username?.[0]?.toUpperCase() || user?.fullName?.[0]?.toUpperCase() || "U"}
                   </div>
                   <div className="flex-1">
-                    <p className="text-white font-medium">{user?.fullName || user?.username}</p>
+                    <p className="text-white font-medium">{user?.username || user?.fullName}</p>
                     <p className="text-slate-400 text-sm">{user?.email}</p>
                   </div>
                 </div>
