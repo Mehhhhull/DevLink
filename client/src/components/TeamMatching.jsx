@@ -294,18 +294,16 @@ export default function TeamMatching() {
       
       if (res.ok) {
         const data = await res.json();
-        console.log("Fetched teammates:", data.length, "teammates");
+        console.log("Fetched teammates:", data.length, "real teammates");
         
-        if (data.length > 0) {
-          setTeammates(data);
-          setFilteredTeammates(data);
-        } else {
-          console.log("No real teammates found, using demo data");
-          setTeammates(demoTeammates);
-          setFilteredTeammates(demoTeammates);
-        }
+        // Always combine: real users first, then demo users
+        const combinedData = [...data, ...demoTeammates];
+        setTeammates(combinedData);
+        setFilteredTeammates(combinedData);
+        
+        console.log("Total teammates:", combinedData.length, "(", data.length, "real +", demoTeammates.length, "demo)");
       } else {
-        console.log("API call failed, using demo data");
+        console.log("API call failed, using demo data only");
         const errorData = await res.json().catch(() => ({}));
         console.error("API error:", errorData);
         setTeammates(demoTeammates);

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import TeamMatching from "../components/TeamMatching";
 import Settings from "../components/Settings";
+import Community from "../components/Community";
+import Notifications from "../components/Notifications";
 import AIJudge from "./AIJudge";
 import IdeaHub from "./IdeaHub";
 import { 
@@ -11,6 +13,7 @@ import {
   SparklesIcon,
   ChatBubbleLeftEllipsisIcon,
   UserIcon,
+  BellIcon,
   ArrowRightOnRectangleIcon
 } from "@heroicons/react/24/outline";
 
@@ -23,6 +26,7 @@ export default function Dashboard() {
     { id: "ideaHub", label: "Ideas Hub", icon: LightBulbIcon },
     { id: "teamMatching", label: "Team Matching", icon: UsersIcon },
     { id: "community", label: "Community", icon: ChatBubbleLeftEllipsisIcon },
+    { id: "notifications", label: "Notifications", icon: BellIcon },
     { id: "aiJudge", label: "AI Judge", icon: SparklesIcon }
   ];
 
@@ -35,7 +39,9 @@ export default function Dashboard() {
       case "teamMatching":
         return <TeamMatching />;
       case "community":
-        return <CommunityHub />;
+        return <Community />;
+      case "notifications":
+        return <Notifications />;
       case "aiJudge":
         return <AIJudge />;
       case "profile":
