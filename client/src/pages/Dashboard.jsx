@@ -5,267 +5,236 @@ import Settings from "../components/Settings";
 import AIJudge from "./AIJudge";
 import IdeaHub from "./IdeaHub";
 import { 
-  UsersIcon, 
-  CogIcon, 
-  SparklesIcon,
+  HomeIcon,
   LightBulbIcon,
-  Bars3Icon,
-  XMarkIcon
+  UsersIcon, 
+  SparklesIcon,
+  ChatBubbleLeftEllipsisIcon,
+  UserIcon,
+  ArrowRightOnRectangleIcon
 } from "@heroicons/react/24/outline";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState("teamMatching");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   const navigationItems = [
-    {
-      id: "teamMatching",
-      label: "Team Matching",
-      icon: UsersIcon,
-      description: "Find teams & teammates",
-      gradient: "from-indigo-500 to-blue-600"
-    },
-    {
-      id: "aiJudge", 
-      label: "AI Judge",
-      icon: SparklesIcon,
-      description: "Get feedback on ideas",
-      gradient: "from-purple-500 to-pink-600"
-    },
-    {
-      id: "ideaHub",
-      label: "Idea Hub",
-      icon: LightBulbIcon,
-      description: "Post ideas, upvote, and solve problems",
-      gradient: "from-emerald-500 to-teal-600"
-    }
+    { id: "dashboard", label: "Dashboard", icon: HomeIcon },
+    { id: "ideaHub", label: "Ideas Hub", icon: LightBulbIcon },
+    { id: "teamMatching", label: "Team Matching", icon: UsersIcon },
+    { id: "community", label: "Community", icon: ChatBubbleLeftEllipsisIcon },
+    { id: "aiJudge", label: "AI Judge", icon: SparklesIcon }
   ];
-
-  const settingsItem = {
-    id: "settings",
-    label: "Settings", 
-    icon: CogIcon,
-    description: "Profile & preferences",
-    gradient: "from-emerald-500 to-teal-600"
-  };
 
   const renderActiveComponent = () => {
     switch (activeTab) {
-      case "teamMatching":
-        return <TeamMatching />;
-      case "aiJudge":
-        return <AIJudge />;
+      case "dashboard":
+        return <DashboardHome setActiveTab={setActiveTab} />;
       case "ideaHub":
         return <IdeaHub />;
-      case "settings":
+      case "teamMatching":
+        return <TeamMatching />;
+      case "community":
+        return <CommunityHub />;
+      case "aiJudge":
+        return <AIJudge />;
+      case "profile":
         return <Settings />;
       default:
-        return <TeamMatching />;
+        return <DashboardHome setActiveTab={setActiveTab} />;
     }
   };
 
-  const getPageInfo = () => {
-    const item = navigationItems.find(item => item.id === activeTab) || 
-                 (activeTab === "settings" ? settingsItem : null);
-    return {
-      title: item?.label || "Dashboard",
-      description: item?.description || "Welcome to DevLink"
-    };
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800">
-      <div className="flex">
-        {/* Enhanced Sidebar Navigation */}
-        <aside className={`${sidebarOpen ? 'w-80' : 'w-20'} min-h-screen bg-slate-900/50 backdrop-blur-sm border-r border-slate-700/50 transition-all duration-300 relative`}>
-          {/* Toggle Button */}
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="absolute top-4 right-4 z-10 p-2 rounded-lg bg-slate-800/60 hover:bg-slate-700/60 text-slate-300 hover:text-white transition-all duration-200"
-          >
-            {sidebarOpen ? (
-              <XMarkIcon className="w-5 h-5" />
-            ) : (
-              <Bars3Icon className="w-5 h-5" />
-            )}
-          </button>
+    <div className="min-h-screen bg-slate-950">
+      {/* Top Navigation */}
+      <nav className="border-b border-slate-800 bg-slate-950/95 backdrop-blur">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex items-center gap-8">
+              <div className="flex flex-col items-start gap-1">
+                <h1 className="text-xl font-bold tracking-tight text-white">DevLink</h1>
+                <div className="flex items-center rounded-full border border-indigo-400/30 bg-slate-900/70 px-2 py-1 text-xs font-semibold text-slate-100">
+                  <span className="mr-1 text-indigo-200">Backed by</span>
+                  <span className="text-white">Nerds</span>
+                </div>
+              </div>
+              
+              {/* Navigation Links */}
+              <div className="hidden md:flex items-center gap-1">
+                {navigationItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeTab === item.id;
+                  
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        isActive
+                          ? "bg-indigo-600 text-white"
+                          : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
-          {/* Logo & User Section */}
-          <div className="p-6 border-b border-slate-700/50">
-            {sidebarOpen ? (
-              <>
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="text-xl font-bold text-white">DevLink</span>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg">
-                    {user?.username?.[0]?.toUpperCase() || user?.fullName?.[0]?.toUpperCase() || "U"}
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-white font-medium">{user?.username || user?.fullName}</p>
-                    <p className="text-slate-400 text-sm">{user?.email}</p>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="flex justify-center pt-8">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold">
+            {/* User Section */}
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setActiveTab("profile")}
+                className={`hidden sm:flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 ${
+                  activeTab === "profile" 
+                    ? "bg-indigo-600" 
+                    : "hover:bg-slate-800"
+                }`}
+              >
+                <div className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium text-sm">
                   {user?.username?.[0]?.toUpperCase() || user?.fullName?.[0]?.toUpperCase() || "U"}
                 </div>
-              </div>
-            )}
+                <span className="text-slate-200 text-sm font-medium">
+                  {user?.username || user?.fullName}
+                </span>
+              </button>
+              
+              <button
+                onClick={logout}
+                className="flex items-center gap-2 px-3 py-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-all duration-200"
+                title="Sign Out"
+              >
+                <ArrowRightOnRectangleIcon className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm">Sign Out</span>
+              </button>
+            </div>
           </div>
+        </div>
+      </nav>
 
-          {/* Navigation Menu */}
-          <nav className={`p-6 space-y-3 ${!sidebarOpen ? 'px-3' : ''}`}>
-            {sidebarOpen && (
-              <h3 className="text-slate-400 text-xs uppercase tracking-wider font-semibold mb-4">
-                Navigation
-              </h3>
-            )}
-            
-            {navigationItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
-              
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`w-full group relative overflow-hidden rounded-xl ${sidebarOpen ? 'p-4' : 'p-3'} transition-all duration-300 ${
-                    isActive 
-                      ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg shadow-indigo-500/25` 
-                      : "text-slate-300 hover:text-white hover:bg-slate-800/60"
-                  }`}
-                  title={!sidebarOpen ? item.label : ''}
-                >
-                  {sidebarOpen ? (
-                    <div className="flex items-center gap-4">
-                      <div className={`p-2 rounded-lg transition-all duration-300 ${
-                        isActive 
-                          ? "bg-white/20" 
-                          : "bg-slate-700/50 group-hover:bg-slate-600/50"
-                      }`}>
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div className="text-left">
-                        <div className="font-medium">{item.label}</div>
-                        <div className={`text-xs transition-all duration-300 ${
-                          isActive ? "text-white/80" : "text-slate-400"
-                        }`}>
-                          {item.description}
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex justify-center">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                  )}
-                  
-                  {/* Active indicator */}
-                  {isActive && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-50" />
-                  )}
-                </button>
-              );
-            })}
-          </nav>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-6 py-8">
+        {renderActiveComponent()}
+      </main>
+    </div>
+  );
+}
 
-          {/* Settings & Logout at Bottom */}
-          <div className={`absolute bottom-6 left-6 right-6 space-y-3 ${!sidebarOpen ? 'left-3 right-3' : ''}`}>
-            {/* Settings Button */}
-            {(() => {
-              const Icon = settingsItem.icon;
-              const isActive = activeTab === settingsItem.id;
-              
-              return (
-                <button
-                  onClick={() => setActiveTab(settingsItem.id)}
-                  className={`w-full group relative overflow-hidden rounded-xl ${sidebarOpen ? 'p-4' : 'p-3'} transition-all duration-300 ${
-                    isActive 
-                      ? `bg-gradient-to-r ${settingsItem.gradient} text-white shadow-lg shadow-emerald-500/25` 
-                      : "text-slate-300 hover:text-white hover:bg-slate-800/60"
-                  }`}
-                  title={!sidebarOpen ? settingsItem.label : ''}
-                >
-                  {sidebarOpen ? (
-                    <div className="flex items-center gap-4">
-                      <div className={`p-2 rounded-lg transition-all duration-300 ${
-                        isActive 
-                          ? "bg-white/20" 
-                          : "bg-slate-700/50 group-hover:bg-slate-600/50"
-                      }`}>
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div className="text-left">
-                        <div className="font-medium">{settingsItem.label}</div>
-                        <div className={`text-xs transition-all duration-300 ${
-                          isActive ? "text-white/80" : "text-slate-400"
-                        }`}>
-                          {settingsItem.description}
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex justify-center">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                  )}
-                  
-                  {/* Active indicator */}
-                  {isActive && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-50" />
-                  )}
-                </button>
-              );
-            })()}
+// Dashboard Home Component
+function DashboardHome({ setActiveTab }) {
+  const features = [
+    {
+      id: "ideaHub",
+      title: "Ideas Hub", 
+      description: "Discover and share innovative project ideas",
+      icon: LightBulbIcon,
+      stats: "24 ideas"
+    },
+    {
+      id: "teamMatching", 
+      title: "Team Matching",
+      description: "Find the perfect teammates for your projects", 
+      icon: UsersIcon,
+      stats: "156 developers"
+    },
+    {
+      id: "community",
+      title: "Community",
+      description: "Connect and collaborate with fellow developers",
+      icon: ChatBubbleLeftEllipsisIcon, 
+      stats: "89 members"
+    },
+    {
+      id: "aiJudge",
+      title: "AI Judge",
+      description: "Get expert feedback on your hackathon ideas",
+      icon: SparklesIcon,
+      stats: "12 evaluations"
+    }
+  ];
 
-            {/* Sign Out Button */}
+  return (
+    <div className="space-y-12">
+      {/* Welcome Header */}
+      <div className="text-center space-y-4 pt-8">
+        <h1 className="text-4xl md:text-5xl font-semibold text-white leading-tight">
+          Build balanced teams, pitch stronger ideas, and launch better projects
+        </h1>
+        <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+          DevLink helps hackathon teams discover compatible teammates, validate ideas, and shape winning MVPs with AI-powered matchmaking.
+        </p>
+      </div>
+
+      {/* Feature Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {features.map((feature) => {
+          const Icon = feature.icon;
+          
+          return (
             <button
-              onClick={logout}
-              className={`w-full ${sidebarOpen ? 'p-3' : 'p-3'} text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-lg transition-all duration-200 text-sm`}
-              title={!sidebarOpen ? 'Sign Out' : ''}
+              key={feature.id}
+              onClick={() => setActiveTab(feature.id)}
+              className="group bg-slate-900 border border-slate-800 rounded-lg p-6 hover:border-slate-700 transition-all duration-200 text-left"
             >
-              {sidebarOpen ? 'Sign Out' : '↩'}
-            </button>
-          </div>
-        </aside>
-
-        {/* Main Content Area */}
-        <main className="flex-1 min-h-screen">
-          {/* Header */}
-          <header className="bg-slate-900/30 backdrop-blur-sm border-b border-slate-700/50 p-6">
-            <div className="max-w-7xl mx-auto">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-3xl font-bold text-white mb-1">
-                    {getPageInfo().title}
-                  </h1>
-                  <p className="text-slate-400">
-                    {getPageInfo().description}
-                  </p>
+              <div className="space-y-4">
+                <div className="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center">
+                  <Icon className="w-5 h-5 text-white" />
                 </div>
                 
-                <div className="flex items-center gap-4">
-                  <div className="hidden md:flex items-center gap-2 px-3 py-2 bg-slate-800/50 rounded-lg">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                    <span className="text-slate-300 text-sm">Online</span>
+                <div>
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-slate-400 text-sm leading-relaxed mb-3">
+                    {feature.description}
+                  </p>
+                  <div className="text-xs text-slate-500 font-medium">
+                    {feature.stats}
                   </div>
                 </div>
               </div>
-            </div>
-          </header>
+            </button>
+          );
+        })}
+      </div>
 
-          {/* Page Content */}
-          <div className="p-6">
-            <div className="max-w-7xl mx-auto">
-              {renderActiveComponent()}
-            </div>
+      {/* Stats Section */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {[
+          { label: "Active Ideas", value: "24" },
+          { label: "Team Members", value: "156" },
+          { label: "Community Posts", value: "89" },
+          { label: "AI Evaluations", value: "12" }
+        ].map((stat, index) => (
+          <div key={index} className="bg-slate-900 border border-slate-800 rounded-lg p-4">
+            <div className="text-2xl font-bold text-white">{stat.value}</div>
+            <div className="text-slate-400 text-sm">{stat.label}</div>
           </div>
-        </main>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Placeholder Community Component
+function CommunityHub() {
+  return (
+    <div className="space-y-6">
+      <div className="text-center space-y-4">
+        <h2 className="text-3xl font-bold text-white">Community Hub</h2>
+        <p className="text-slate-400">Connect and collaborate with fellow developers</p>
+      </div>
+      
+      <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 text-center">
+        <ChatBubbleLeftEllipsisIcon className="w-12 h-12 text-indigo-600 mx-auto mb-4" />
+        <h3 className="text-xl font-semibold text-white mb-2">Coming Soon</h3>
+        <p className="text-slate-400">
+          Community features are under development. Stay tuned for discussions, forums, and collaboration tools.
+        </p>
       </div>
     </div>
   );
