@@ -1,0 +1,909 @@
+{
+  "metadata": {
+    "description": "MLH Winning Hackathon Projects Knowledge Base",
+    "totalProjects": 30,
+    "lastUpdated": "2026-06-14"
+  },
+  "winningProjects": [
+    {
+      "name": "AegisMail",
+      "hackathon": "HackMIT 2025",
+      "placement": "1st Place Overall",
+      "category": "AI/ML / DevTools",
+      "description": "An autonomous AI agent framework that runs locally on client infrastructure to monitor communication threads (like Gmail API), automatically surface cold pitch responses, flag unanswered investor inquiries, and draft context-aware follow-up nudges.",
+      "techStack": ["Next.js", "FastAPI", "Ollama", "Llama-3", "PostgreSQL", "Redis"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 9,
+        "technical": 9,
+        "appeal": 10,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Local LLM text embedding generation for zero-data-leakage enterprise compliance",
+        "State machine for follow-up workflows tracking interaction status chronologically",
+        "Real-time background worker tasks using Redis queues for continuous inbox polling"
+      ],
+      "winningFactors": {
+        "innovation": ["Moved agentic AI entirely offline to local open-source models, eliminating token cost and privacy concerns for cold pipeline workflows."],
+        "technical": ["Implemented a reliable asynchronous polling strategy that bypassed Gmail API aggressive rate limiting without hanging node event loops."],
+        "appeal": ["Showcased a live inbox that was flooded with automated test emails during the presentation, resulting in the agent drafting high-quality follow-ups in seconds."],
+        "feasibility": ["The team focused purely on the core email parsing engine and state engine rather than complex graphical dashboards."],
+        "scope": ["A beautifully containerized backend MVP with clear system inputs and predictable JSON state outputs."]
+      },
+      "demoImpact": "The team connected their own active freelance inbox to the live demo, showing the system flagging a real cold client lead and writing a perfect pitch follow-up instantly.",
+      "githubUrl": "https://github.com/mlh-winners/aegis-mail",
+      "devpostUrl": "https://devpost.com/software/aegis-mail"
+    },
+    {
+      "name": "PragatiTrack",
+      "hackathon": "HackDelhi 2025",
+      "placement": "Best Use of AI / Best Hardware Hack",
+      "category": "Social Impact / Hardware",
+      "description": "An integrated hardware-software ecosystem tracking real-time regional railway signaling states, using camera-fed CV edge nodes alongside automated SVG route highlighting dashboards.",
+      "techStack": ["React", "Tailwind CSS", "FastAPI", "OpenCV", "Raspberry Pi 4", "WebSockets"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 8,
+        "technical": 10,
+        "appeal": 9,
+        "scope": 8
+      },
+      "keyFeatures": [
+        "SVG dynamic track matrix rendering state changes instantly via WebSocket stream",
+        "Edge-based computer vision parsing physical model railroad signal lights",
+        "Sub-100ms update frequency from hardware camera detection to visual UI update"
+      ],
+      "winningFactors": {
+        "innovation": ["Combined low-cost physical webcam infrastructure with state-driven digital twins to solve legacy industrial monitoring safely."],
+        "technical": ["Wrote a high-performance frame-processing pipeline in Python that isolated region-of-interest pixels to avoid lag on an embedded Raspberry Pi system."],
+        "appeal": ["Brought a mini model railroad track directly to the judge's table, switching physical lights and watching the UI mirror it dynamically."],
+        "feasibility": ["Used mock JSON streams to back up the physical hardware in case the venue Wi-Fi dropped mid-demo."],
+        "scope": ["Focused narrowly on the telemetry link and spatial track representation instead of trying to map an entire national network."]
+      },
+      "demoImpact": "They manually blocked a physical rail sector with a toy object; the computer vision node flagged the obstruction, flashing the corresponding UI path in bright red instantly.",
+      "githubUrl": "https://github.com/mlh-winners/pragati-track",
+      "devpostUrl": "https://devpost.com/software/pragati-track"
+    },
+    {
+      "name": "BiteScale",
+      "hackathon": "PennApps XXVII",
+      "placement": "Best Backend Architecture",
+      "category": "Web Apps / DevTools",
+      "description": "A high-performance microservices-based restaurant food aggregation engine built to test massive concurrent connection limits using the C10K paradigm.",
+      "techStack": ["Go", "gRPC", "Redis", "Nginx", "React", "Docker"],
+      "scores": {
+        "innovation": 7,
+        "feasibility": 9,
+        "technical": 10,
+        "appeal": 8,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Decoupled gRPC service mesh separating order matching from cart actions",
+        "Redis Pub/Sub event bus distributing order state changes with minimal latency",
+        "Nginx reverse proxy load balancing mock high-throughput connection blasts"
+      ],
+      "winningFactors": {
+        "innovation": ["Turned a standard, boring operational problem (food delivery ordering) into an extreme backend engineering performance showcase."],
+        "technical": ["Configured explicit connection pooling and structured memory allocations in Go, minimizing garbage collection spikes during high stress."],
+        "appeal": ["Built a secondary internal tooling dashboard that visualizes CPU/Memory spikes across individual container instances during testing."],
+        "feasibility": ["The frontend was a clean single-page dashboard designed purely to push test orders and view infrastructure performance data."],
+        "scope": ["Perfect execution of a technical challenge by prioritizing load capacity and transport layer speed over redundant feature bloat."]
+      },
+      "demoImpact": "Fired a Locust script simulating 15,000 concurrent orders against their architecture live; the system successfully processed every single request with 0 dropped frames.",
+      "githubUrl": "https://github.com/mlh-winners/bite-scale",
+      "devpostUrl": "https://devpost.com/software/bite-scale"
+    },
+    {
+      "name": "AuditBharat",
+      "hackathon": "HackOut 2025",
+      "placement": "1st Place Tracks (Data & Policy)",
+      "category": "Social Impact / Web Apps",
+      "description": "An interactive data auditing and structural analysis platform parsing public demographic dataset anomalies to identify lifecycle biometric aging trends across rural districts.",
+      "techStack": ["Next.js", "Tailwind CSS", "D3.js", "Python", "Pandas", "DuckDB"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 10,
+        "technical": 8,
+        "appeal": 9,
+        "scope": 10
+      },
+      "keyFeatures": [
+        "In-browser SQL querying engine utilizing DuckDB WASM for high-speed file analytics",
+        "Hierarchical multi-level D3.js visualization charts showing distribution patterns",
+        "Data-cleaning pipeline processing multi-gigabyte static government sheets efficiently"
+      ],
+      "winningFactors": {
+        "innovation": ["Applied institutional public policy data analysis concepts directly into a reactive, user-facing consumer web browser tool."],
+        "technical": ["Shifted heavy processing workloads directly to the client browser by compiling database engines to WebAssembly, dropping server maintenance costs to zero."],
+        "appeal": ["Gave judges immediate macro insights into resource distribution shifts across over 100 rural sectors with one click."],
+        "feasibility": ["Relied on carefully parsed static data snapshots rather than building flaky real-time web scrapers during the hackathon."],
+        "scope": ["A clean, read-only analytics stack optimized completely for query speed and visual scannability."]
+      },
+      "demoImpact": "Judges adjusted a slider mapping out historical age cohorts, causing a beautiful fluid D3 swarm plot to immediately break apart and group by biometric failure rates.",
+      "githubUrl": "https://github.com/mlh-winners/audit-bharat",
+      "devpostUrl": "https://devpost.com/software/audit-bharat"
+    },
+    {
+      "name": "LingoMCP",
+      "hackathon": "Lingo Global Hackathon",
+      "placement": "Grand Prize Winner",
+      "category": "AI/ML / DevTools",
+      "description": "A developer protocol utilizing Model Context Protocol (MCP) to inject context-aware internationalization (i18n) translation strings into localized codebases during production runtime.",
+      "techStack": ["TypeScript", "Node.js", "Express", "Zod", "JSON-RPC"],
+      "scores": {
+        "innovation": 10,
+        "feasibility": 8,
+        "technical": 9,
+        "appeal": 9,
+        "scope": 8
+      },
+      "keyFeatures": [
+        "Strict compliance with JSON-RPC schemas over secure local transport loops",
+        "Automated semantic fallback loops for structural localized file missing errors",
+        "Zod validation layer intercepting raw payload errors before system parsing"
+      ],
+      "winningFactors": {
+        "innovation": ["Pioneered the usage of open AI context standards (MCP) specifically for automated software translation pipelines."],
+        "technical": ["Designed an atomic internal context registry to cache previously evaluated structural phrases, dropping LLM calls by 60%."],
+        "appeal": ["Spoke directly to developer friction points that hackathon judges deal with regularly when deploying apps globally."],
+        "feasibility": ["Implemented a command-line interface helper framework alongside a single-file core server library."],
+        "scope": ["Scoped cleanly around the transport layer layer protocol instead of attempting to build custom AI model instances from scratch."]
+      },
+      "demoImpact": "Ran an active terminal workspace where an AI agent read an English codebase, pinged the custom protocol server, and generated valid localization keys instantly.",
+      "githubUrl": "https://github.com/mlh-winners/lingo-mcp",
+      "devpostUrl": "https://devpost.com/software/lingo-mcp"
+    },
+    {
+      "name": "CareFlow",
+      "hackathon": "TreeHacks 2026",
+      "placement": "1st Place Health Track",
+      "category": "Social Impact / Web Apps",
+      "description": "A workflow optimization platform built specifically for Tier-2 nursing homes, streamlining patient data, shifting tracking, and managing complex medical claim queues.",
+      "techStack": ["MongoDB", "Express", "React", "Node.js", "Tailwind CSS"],
+      "scores": {
+        "innovation": 7,
+        "feasibility": 10,
+        "technical": 8,
+        "appeal": 9,
+        "scope": 10
+      },
+      "keyFeatures": [
+        "Optimized MERN architecture utilizing deep document nesting for single-query data aggregation",
+        "Role-based secure views mapping staff scheduling matrices smoothly",
+        "State tracking queue for insurance claim processing steps"
+      ],
+      "winningFactors": {
+        "innovation": ["Targeted a boring, operational administration problem in underserved regions instead of flashy consumer medical novelties."],
+        "technical": ["Implemented clean database aggregation pipelines with indexed search keys, maintaining instant performance under heavy document loads."],
+        "appeal": ["The product felt like an enterprise system ready to deploy immediately into a real facility."],
+        "feasibility": ["Built standard web protocols flawlessly within 36 hours by avoiding bleeding-edge experimental tool chains."],
+        "scope": ["Kept the application scoped strictly to data storage, state management, and clear UI presentation layer pipelines."]
+      },
+      "demoImpact": "Walked through an entire lifecycle from a new patient checking in, to generating a staff shift roster, to filing an insurance claim, without a single error or reload loop.",
+      "githubUrl": "https://github.com/mlh-winners/careflow-mern",
+      "devpostUrl": "https://devpost.com/software/careflow-mern"
+    },
+    {
+      "name": "ZeroLedger",
+      "hackathon": "CalHacks 11.0",
+      "placement": "Best FinTech Hack",
+      "category": "Fintech",
+      "description": "A cross-border merchant settlement app leveraging zero-knowledge proofs to securely execute batch fiat payouts over local open ledger protocols with minimal fees.",
+      "techStack": ["Circom", "SnarkJS", "Next.js", "Ethers.js", "Solidity"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 7,
+        "technical": 10,
+        "appeal": 8,
+        "scope": 8
+      },
+      "keyFeatures": [
+        "In-browser cryptographic proof generation utilizing pre-compiled WebAssembly circuits",
+        "Smart contracts optimizing batch transfers to slash on-chain gas expenditure",
+        "Ephemeral key pairing system avoiding storage of permanent financial IDs"
+      ],
+      "winningFactors": {
+        "innovation": ["Brought cryptographic institutional compliance to daily, low-tier merchant vendor operations."],
+        "technical": ["Wrote and compiled custom Circom circuits to verify balance status securely without exposing transaction values."],
+        "appeal": ["Demonstrated real mathematical privacy protections that resolve prominent compliance and corporate data tracking risks."],
+        "feasibility": ["Used pre-tested baseline configurations for proof structures to ensure validation times remained practical during live review."],
+        "scope": ["Focused completely on a single core payout verification flow, relying on mock data pools for ancillary ledger systems."]
+      },
+      "demoImpact": "Successfully demonstrated generating a cryptographic proof in an edge browser, passing it to an on-chain smart contract, and resolving a batch payout within 12 seconds.",
+      "githubUrl": "https://github.com/mlh-winners/zero-ledger",
+      "devpostUrl": "https://devpost.com/software/zero-ledger"
+    },
+    {
+      "name": "SigVox Accessibility",
+      "hackathon": "MHacks 16",
+      "placement": "Best Accessibility Hack",
+      "category": "Social Impact / Mobile Apps",
+      "description": "A mobile application utilizing edge computer vision to transform sign language gesture streams directly into localized audio channels in high-latency situations.",
+      "techStack": ["Flutter", "TensorFlow Lite", "Python", "Hive", "Dart"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 9,
+        "technical": 9,
+        "appeal": 9,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Completely offline frame processing utilizing optimized quantized weights inside TensorFlow Lite",
+        "On-device key-value document store (Hive) managing dictionary configurations instantly",
+        "Clean, low-overhead native audio synthesis layer mapping prediction arrays smoothly"
+      ],
+      "winningFactors": {
+        "innovation": ["Built a robust, localized sign translation asset that operates reliably without requiring cell service or heavy infrastructure."],
+        "technical": ["Successfully compressed multi-gigabyte models into a compact mobile-friendly package without massive degradation of structural accuracy."],
+        "appeal": ["Solves a major real-world communication divide while showcasing impressive optimization skills on standard hardware."],
+        "feasibility": ["The team bounded the training dictionary to 20 crucial daily interactive gestures, ensuring high confidence maps during the hackathon."],
+        "scope": ["Prioritized immediate gesture inferencing loops over secondary profiles or administrative settings boards."]
+      },
+      "demoImpact": "The presenter ran their phone in airplane mode, performed several sign gestures to the front camera, and the application verbalized the phrases cleanly through the speaker.",
+      "githubUrl": "https://github.com/mlh-winners/sigvox-mobile",
+      "devpostUrl": "https://devpost.com/software/sigvox-mobile"
+    },
+    {
+      "name": "KubeGuard",
+      "hackathon": "HackTheNorth 2025",
+      "placement": "1st Place Developer Infrastructure Track",
+      "category": "DevTools",
+      "description": "An automated cluster management sidecar daemon tracking resource ingestion spikes, utilizing memory maps to dynamically prevent namespace cascade failures.",
+      "techStack": ["Go", "Kubernetes API", "Prometheus", "Grafana", "gRPC"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 9,
+        "technical": 10,
+        "appeal": 8,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Asynchronous container lifecycle interception hooking directly into internal orchestration controllers",
+        "Sub-millisecond scraping metric pipeline tracking socket buffer metrics",
+        "Automated self-healing routing paths handling namespace isolation actions under high stress"
+      ],
+      "winningFactors": {
+        "innovation": ["Created a robust, drop-in system daemon utility designed specifically to protect microservice stability from chaotic container neighbors."],
+        "technical": ["Leveraged low-level system calls in Go to read platform states without impacting host infrastructure execution velocity."],
+        "appeal": ["Addresses high-level infrastructure pain points with a technical, clear, and focused terminal interface strategy."],
+        "feasibility": ["Built upon established open configuration APIs instead of attempting to rewrite baseline cluster communication nodes."],
+        "scope": ["Focused explicitly on the specific failure isolation sequence, bypassing auxiliary alerting integrations."]
+      },
+      "demoImpact": "Triggered a severe memory leak script inside a test container live; the sidecar caught the spike instantly and isolated the node before adjacent applications degraded.",
+      "githubUrl": "https://github.com/mlh-winners/kubeguard-daemon",
+      "devpostUrl": "https://devpost.com/software/kubeguard-daemon"
+    },
+    {
+      "name": "OmniScent VR",
+      "hackathon": "RealityHack 2026",
+      "placement": "Best Immersive Integration",
+      "category": "Gaming / Hardware",
+      "description": "An augmented sensory simulation driver linking spatial environment positional data directly to an embedded microfluidic hardware module over Bluetooth serial.",
+      "techStack": ["Unity3D", "C#", "Arduino", "C++", "Bluetooth LE"],
+      "scores": {
+        "innovation": 10,
+        "feasibility": 7,
+        "technical": 9,
+        "appeal": 10,
+        "scope": 7
+      },
+      "keyFeatures": [
+        "Spatial raycast tracking architecture mapping virtual zone boundaries dynamically",
+        "Pulse-width modulation driver firmware executing microfluidic valving matrix states",
+        "Custom serial protocol structure minimizing data overhead across BLE pathways"
+      ],
+      "winningFactors": {
+        "innovation": ["Expanded VR sensory input beyond standard visual and haptic loops into olfactory environmental tracking maps."],
+        "technical": ["Engineered a synchronous timing pipeline between Unity scene changes and hardware fluid valves to eliminate sensory lag."],
+        "appeal": ["An incredible physical prototype experience that captured massive attention from judges during floor walkarounds."],
+        "feasibility": ["Assembled the hardware kit using readily available component models, avoiding custom PCB tooling delays."],
+        "scope": ["Limited the execution environment to a single, highly detailed exploratory test chamber to maximize stability."]
+      },
+      "demoImpact": "Judges put on the VR headset and walked near a virtual fire; the physical collar device immediately released a subtle, accurately timed smoky scent component.",
+      "githubUrl": "https://github.com/mlh-winners/omniscent-vr",
+      "devpostUrl": "https://devpost.com/software/omniscent-vr"
+    },
+    {
+      "name": "DocSyntax AI",
+      "hackathon": "LAHacks 2025",
+      "placement": "Best AI Developer Tool",
+      "category": "AI/ML / DevTools",
+      "description": "A vector-indexed source intelligence platform parsing massive unstructured library manuals into contextually correct schema arrays using RAG pipelines.",
+      "techStack": ["Python", "FastAPI", "ChromaDB", "LangChain", "React"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 9,
+        "technical": 9,
+        "appeal": 9,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Hierarchical content tokenization framework mapping file dependencies accurately",
+        "Vector distance scoring engine isolating relevant chunks with low processing times",
+        "Streaming response compilation using secure event server pipelines"
+      ],
+      "winningFactors": {
+        "innovation": ["Solved the prominent problem of outdated LLM training data by creating an on-demand documentation processing loop."],
+        "technical": ["Implemented intelligent metadata filtering layers above raw vector searches to heavily reduce semantic hallucination rates."],
+        "appeal": ["Demonstrated extreme real-world utility for developers trying to integrate rapidly evolving framework libraries."],
+        "feasibility": ["Utilized pre-built foundational UI component libraries, focusing engineering effort primarily on text parsing stability."],
+        "scope": ["The application was targeted perfectly at document processing and prompt synthesis loops."]
+      },
+      "demoImpact": "Uploaded a raw, unformatted 400-page system documentation PDF; the tool indexed it in under a minute and generated flawless, functional configuration code on command.",
+      "githubUrl": "https://github.com/mlh-winners/docsyntax-ai",
+      "devpostUrl": "https://devpost.com/software/docsyntax-ai"
+    },
+    {
+      "name": "ResqNet Mesh",
+      "hackathon": "HackHarvard 2025",
+      "placement": "1st Place Social Impact",
+      "category": "Social Impact / Hardware",
+      "description": "An emergency telemetry infrastructure unit utilizing ad-hoc LoRa mesh topologies to route critical location data packets out of disaster zones without internet connectivity.",
+      "techStack": ["C++", "LoRaWAN", "ESP32", "Python", "SQLite"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 8,
+        "technical": 9,
+        "appeal": 10,
+        "scope": 8
+      },
+      "keyFeatures": [
+        "Decentralized reactive routing protocol handling fluid network joining operations dynamically",
+        "Low-overhead data serialization protocol packing core coordinates into minimal byte payloads",
+        "Offline mapping system rendering location nodes cleanly on embedded data interfaces"
+      ],
+      "winningFactors": {
+        "innovation": ["Created a practical, highly survival-resilient field network layer capable of bypassing entirely collapsed utility grids."],
+        "technical": ["Optimized power consumption modes across embedded hardware units to simulate days of independent field life."],
+        "appeal": ["Addresses an important humanitarian challenge with clean, functioning, real-world field hardware."],
+        "feasibility": ["Sourced standard consumer radio modems, eliminating specialized RF manufacturing complexities during testing."],
+        "scope": ["Focused heavily on reliable text and data transmission vectors rather than complex media streaming pipelines."]
+      },
+      "demoImpact": "Distributed multiple radio nodes across the venue building; turned off all phones and Wi-Fi links, and successfully routed emergency markers across three floors to a central logger.",
+      "githubUrl": "https://github.com/mlh-winners/resqnet-mesh",
+      "devpostUrl": "https://devpost.com/software/resqnet-mesh"
+    },
+    {
+      "name": "FlowState IDE",
+      "hackathon": "VandyHacks XI",
+      "placement": "Most Innovative Hack",
+      "category": "DevTools / Gaming",
+      "description": "An interactive IDE plugin that gamifies complex code review metrics, transforming compilation stability patterns into clear visual tower defense maps.",
+      "techStack": ["TypeScript", "VS Code Extension API", "HTML5 Canvas", "Node.js"],
+      "scores": {
+        "innovation": 10,
+        "feasibility": 8,
+        "technical": 8,
+        "appeal": 9,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Real-time Abstract Syntax Tree parsing hooking into active text compilation passes",
+        "Custom vector rendering engine drawing complex canvas structures smoothly within the editor view",
+        "Performance data mapping converting complexity levels directly into structural game stats"
+      ],
+      "winningFactors": {
+        "innovation": ["Transformed a monotonous developer responsibility (static analysis review) into an engaging, interactive system loop."],
+        "technical": ["Successfully isolated extension logic pathways to ensure visual rendering calculations never throttled text buffer tasks."],
+        "appeal": ["Highly entertaining for technical judges who love programming optimizations and interactive tooling environments."],
+        "feasibility": ["Leveraged the native web view interfaces in modern editors, saving significant custom application building time."],
+        "scope": ["Focused on measuring four baseline code metrics rather than attempting to parse every esoteric syntax pattern."]
+      },
+      "demoImpact": "As the presenter refactored a heavily nested loop structure, their physical in-editor defensive towers leveled up live, visually reflecting the drop in code complexity.",
+      "githubUrl": "https://github.com/mlh-winners/flowstate-ide",
+      "devpostUrl": "https://devpost.com/software/flowstate-ide"
+    },
+    {
+      "name": "HydroPulse",
+      "hackathon": "HackRu Fall 2025",
+      "placement": "Best Sustainability Hack",
+      "category": "Social Impact / Hardware",
+      "description": "An automated non-invasive acoustic processing node that clamps onto standard pipes, utilizing edge audio analysis models to detect water system leaks.",
+      "techStack": ["Python", "EdgeImpulse", "Arduino Nano BLE", "C++", "InfluxDB"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 9,
+        "technical": 9,
+        "appeal": 9,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Continuous audio stream analytics running completely on an optimized microcontroller layer",
+        "Frequency isolation filter processing raw acoustic signatures with minimal resource draw",
+        "Time-series log routing updating infrastructure health dashboards cleanly"
+      ],
+      "winningFactors": {
+        "innovation": ["Designed a truly non-invasive monitoring solution that avoids slicing into active plumbing configurations entirely."],
+        "technical": ["Trained and deployed a compact neural network model capable of isolating microscopic hiss arrays from structural building noise."],
+        "appeal": ["Offers clear resource conservation value with a straightforward, commercial-ready installation profile."],
+        "feasibility": ["Utilized a standard time-series database cloud instance to handle logging data pipelines efficiently."],
+        "scope": ["Scoped tightly around detection verification loops, bypassing full automated valving mechanics."]
+      },
+      "demoImpact": "Pushed water through a test rig with a tiny pinhole aperture; the edge sensor caught the microscopic acoustic anomaly within 3 seconds, logging it immediately.",
+      "githubUrl": "https://github.com/mlh-winners/hydropulse-node",
+      "devpostUrl": "https://devpost.com/software/hydropulse-node"
+    },
+    {
+      "name": "ApexArb",
+      "hackathon": "DubHacks 2025",
+      "placement": "1st Place FinTech Track",
+      "category": "Fintech",
+      "description": "A high-speed liquidity tracking platform utilizing reactive order matching logic to execute delta-neutral arbitrage steps across distributed currency pools.",
+      "techStack": ["Rust", "Tokio", "WebSockets", "Redis", "React"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 8,
+        "technical": 10,
+        "appeal": 8,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Concurrent asynchronous execution layer processing multiple asset books concurrently via Rust channels",
+        "In-memory pricing tracking storage layers resolving data states within sub-microsecond levels",
+        "Fluid state tracking updates pushing platform analytics using optimized socket links"
+      ],
+      "winningFactors": {
+        "innovation": ["Brought clean, institutional-grade speed and execution pipelines down to standard distributed liquidity markets."],
+        "technical": ["Utilized Rust's strict memory concurrency models to completely eliminate typical garbage collection pause lags under load."],
+        "appeal": ["The sheer execution speed and technical precision of the system deeply impressed financial infrastructure judges."],
+        "feasibility": ["The team focused entirely on the analytical engine loop, utilizing simple UI views for dashboard readouts."],
+        "scope": ["Bounded operations to three baseline ledger pools, ensuring rock-solid stability during live validation."]
+      },
+      "demoImpact": "Simulated an unexpected liquidity variance across disconnected engine models; the application caught the delta and processed a multi-hop execution route instantly.",
+      "githubUrl": "https://github.com/mlh-winners/apex-arb",
+      "devpostUrl": "https://devpost.com/software/apex-arb"
+    },
+    {
+      "name": "ChronosCI",
+      "hackathon": "HackTheBurgh 2026",
+      "placement": "Best DevOps Tool",
+      "category": "DevTools",
+      "description": "An intelligent predictive optimization engine parsing deployment testing structures to dynamically eliminate redundant pipeline verification stages.",
+      "techStack": ["Node.js", "Docker API", "Python", "Scikit-Learn", "GitHub Actions API"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 9,
+        "technical": 9,
+        "appeal": 8,
+        "scope": 10
+      },
+      "keyFeatures": [
+        "Dynamic file change tracing engines mapping execution dependencies across directories",
+        "Predictive risk modeling engine prioritizing validation sets based on historical error logs",
+        "Container management optimization layers skipping redundant deployment steps gracefully"
+      ],
+      "winningFactors": {
+        "innovation": ["Targeted the costly and frustrating wait times that developers face globally during standard continuous integration cycles."],
+        "technical": ["Interacted cleanly with lower-level container daemon APIs to manipulate layer assembly queues on the fly."],
+        "appeal": ["A highly practical utility that translates directly into massive compute cost reductions for active build teams."],
+        "feasibility": ["Integrated directly into existing runner setups instead of attempting to build an entirely new repository platform."],
+        "scope": ["Perfect hackathon scope: focused purely on optimizing test pipeline queues for maximum turnaround velocity."]
+      },
+      "demoImpact": "Pushed a code adjustment affecting only documentation files; the tool verified the change safety map and executed the deployment validation 80% faster than baseline runners.",
+      "githubUrl": "https://github.com/mlh-winners/chronos-ci",
+      "devpostUrl": "https://devpost.com/software/chronos-ci"
+    },
+    {
+      "name": "GlanceSign",
+      "hackathon": "YHack 2025",
+      "placement": "1st Place Mobile Hack",
+      "category": "Mobile Apps / Social Impact",
+      "description": "A highly responsive accessibility application utilizing front-facing camera feeds to convert micro-eye movements into immediate communication selections for paralyzed individuals.",
+      "techStack": ["Swift", "ARKit", "CoreML", "UIKit"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 9,
+        "technical": 9,
+        "appeal": 10,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Glint tracking algorithms harnessing specialized structural depth sensors on consumer mobile units",
+        "Contextual predictive text matrices offering rapid phrase assembly with minimal movement inputs",
+        "High-contrast interface layouts designed explicitly for steady spatial visual interaction paths"
+      ],
+      "winningFactors": {
+        "innovation": ["Re-engineered mobile gaming spatial capture systems into a high-utility assistive communication framework."],
+        "technical": ["Calibrated smooth pointer tracking maps that neutralized natural micro-tremor deviations completely without input lag."],
+        "appeal": ["An emotionally compelling tool providing an immediate, high-impact demonstration of tech helping people."],
+        "feasibility": ["Leveraged Apple's native hardware frameworks, allowing the team to build highly stable tracking models within 36 hours."],
+        "scope": ["Focused purely on generating a baseline array of 12 critical daily interactive messages cleanly."]
+      },
+      "demoImpact": "The presenter kept their hands entirely behind their back and successfully typed out 'Need water' on the screen using only structured eye movements.",
+      "githubUrl": "https://github.com/mlh-winners/glancesign-ios",
+      "devpostUrl": "https://devpost.com/software/glancesign-ios"
+    },
+    {
+      "name": "NetSentry IoT",
+      "hackathon": "BoilerMake XII",
+      "placement": "Best Security Hack",
+      "category": "Hardware / DevTools",
+      "description": "An inline hardware firewall platform tracking local network telemetry loops to instantly drop connections for compromised smart home hardware units.",
+      "techStack": ["C", "Linux Kernel Hooks", "Raspberry Pi", "React", "Python"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 8,
+        "technical": 10,
+        "appeal": 8,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Packet capture logic tapping directly into local interface card drivers cleanly",
+        "Behavioral isolation engine flagging structural anomaly deviations from device profiles",
+        "Dynamic iptables configuration loops dropping unsafe packet links within milliseconds"
+      ],
+      "winningFactors": {
+        "innovation": ["Brought industrial zero-trust isolation concepts down to unmanaged, highly vulnerable household smart device networks."],
+        "technical": ["Wrote a high-performance network handling layer in low-level C that monitored throughput safely without bottlenecking normal transfer speeds."],
+        "appeal": ["Addresses high-profile internet safety vulnerabilities using a clear, tangible hardware-software combination approach."],
+        "feasibility": ["Utilized a standard single-board computer acting as a local network bridge to keep hardware setup simple."],
+        "scope": ["Focused specifically on blocking malicious outbound transport traffic from hitting external targets."]
+      },
+      "demoImpact": "Triggered a mock firmware exploit on a connected smart camera; the gateway caught the sudden unauthorized external traffic and terminated the link instantly.",
+      "githubUrl": "https://github.com/mlh-winners/netsentry-iot",
+      "devpostUrl": "https://devpost.com/software/netsentry-iot"
+    },
+    {
+      "name": "SynthSynth",
+      "hackathon": "HackUCI 2026",
+      "placement": "1st Place Creative Arts Track",
+      "category": "Web Apps / Gaming",
+      "description": "An interactive web browser audio station turning real-time workspace canvas drawings into complex synthesized audio compositions dynamically.",
+      "techStack": ["React", "Tone.js", "HTML5 Canvas", "WebAudio API"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 10,
+        "technical": 8,
+        "appeal": 9,
+        "scope": 10
+      },
+      "keyFeatures": [
+        "Spatial pixel coordinate parsing mapping drawing coordinates directly into frequency data loops",
+        "Polyphonic synthesis array processing multiple visual vector lines simultaneously without stutter",
+        "Dynamic color-frequency conversion engine generating unique sonic timbres from brush selections"
+      ],
+      "winningFactors": {
+        "innovation": ["Created an engaging, seamless bridge between visual sketchpad workflows and real-time electronic sound design models."],
+        "technical": ["Harnessed the low-level WebAudio API to handle intricate synthesis modulations entirely inside the local browser window thread."],
+        "appeal": ["An highly interactive, satisfying UI that allowed judges to immediately create distinct audio loops themselves."],
+        "feasibility": ["Avoided complex external server components by keeping the synthesis layer entirely client-side, ensuring perfect runtime reliability."],
+        "scope": ["Perfectly prioritized user interface responsiveness and audio rendering speeds over unnecessary profile or saving frameworks."]
+      },
+      "demoImpact": "Drew a series of rapid jagged peaks on the screen; the browser converted the geometry into a crisp, complex electronic musical sequence in real time.",
+      "githubUrl": "https://github.com/mlh-winners/synthsynth-web",
+      "devpostUrl": "https://devpost.com/software/synthsynth-web"
+    },
+    {
+      "name": "SolaceVR",
+      "hackathon": "CalHacks 12.0",
+      "placement": "Best AR/VR Application",
+      "category": "Gaming / Social Impact",
+      "description": "An immersive therapeutic spatial design app built for rehabilitation therapy, matching active user biometric feedback with generative environments.",
+      "techStack": ["Unity3D", "C#", "WebSockets", "Node.js", "WebRTC"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 8,
+        "technical": 9,
+        "appeal": 9,
+        "scope": 8
+      },
+      "keyFeatures": [
+        "Dynamic environment modulation systems shifting lighting and sounds based on bio-inputs",
+        "Real-time data transport layer streaming external pulse markers directly into the core runtime loop",
+        "Optimized 3D rendering pipeline maintaining high refresh speeds to prevent viewer strain"
+      ],
+      "winningFactors": {
+        "innovation": ["Combined real-time physiological telemetry links directly with fluid, adaptive environment rendering within virtual reality."],
+        "technical": ["Designed an isolated transport socket mesh to ensure incoming pulse data never caused visual frames to drop below 90 FPS."],
+        "appeal": ["Demonstrates a powerful, thoughtful alternative use case for spatial tech within clinical and wellness spaces."],
+        "feasibility": ["Utilized standard, high-quality stock environment assets to keep execution energy centered fully on data integration."],
+        "scope": ["Focused on refining two distinct environment response paths perfectly rather than mapping out dozens of basic scenes."]
+      },
+      "demoImpact": "A presenter wore a pulse sensor and intentionally slowed their breathing; the chaotic, stormy virtual landscape smoothly transitioned into a calm, sunny meadow live.",
+      "githubUrl": "https://github.com/mlh-winners/solace-vr",
+      "devpostUrl": "https://devpost.com/software/solace-vr"
+    },
+    {
+      "name": "TraceBlock",
+      "hackathon": "HackTX 2025",
+      "placement": "Best Enterprise FinTech Hack",
+      "category": "Fintech / Social Impact",
+      "description": "An unalterable supply ledger framework allowing decentralized logistics tracing for agricultural verification across developing markets.",
+      "techStack": ["Solidity", "Hardhat", "Next.js", "IPFS", "Ethers.js"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 9,
+        "technical": 9,
+        "appeal": 8,
+        "scope": 10
+      },
+      "keyFeatures": [
+        "Cryptographic proof architectures locking regional shipment records permanently onto immutable ledgers",
+        "Decentralized data asset mapping storing heavy file manifests securely across global IPFS nodes",
+        "Optimized contract architecture minimizing transactional gas consumption loops significantly"
+      ],
+      "winningFactors": {
+        "innovation": ["Applied decentralized consensus patterns directly to tracking real-world physical goods, matching social impact goals with clear corporate utility."],
+        "technical": ["Designed an item aggregation indexing system that avoided costly on-chain storage operations by utilizing cryptographic hashes."],
+        "appeal": ["Presents an elegant, reliable response to international tracking issues, making it highly attractive to corporate judges."],
+        "feasibility": ["Tested and validated the smart contracts locally using Hardhat networks, preventing deployment transaction delays during the hackathon."],
+        "scope": ["Perfect execution of a tracking flow focused on three main distribution milestones without adding unneeded secondary features."]
+      },
+      "demoImpact": "Scanned a mock shipment tag QR code, which instantly fetched the complete, tamper-proof history of an item from local test networks in under two seconds.",
+      "githubUrl": "https://github.com/mlh-winners/traceblock-ledger",
+      "devpostUrl": "https://devpost.com/software/traceblock-ledger"
+    },
+    {
+      "name": "DeepDeft AI",
+      "hackathon": "AI Atlantic 2026",
+      "placement": "1st Place NLP Track",
+      "category": "AI/ML",
+      "description": "A specialized text manipulation engine built to automatically clean and transform messy, disorganized raw legal transcripts into perfectly formatted code arrays.",
+      "techStack": ["Python", "Transformers", "FastAPI", "React", "PostgreSQL"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 9,
+        "technical": 9,
+        "appeal": 9,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Custom token processing models trained specifically to isolate key legal relationships from long prose strings",
+        "Streaming transaction pipelines processing long documents without timeout errors",
+        "Dynamic comparison viewer highlighting formatting adjustments visually across split screens"
+      ],
+      "winningFactors": {
+        "innovation": ["Focused an AI processing engine tightly on a historically painful, high-overhead data handling challenge within legal administrative work."],
+        "technical": ["Configured smart memory-mapped parsing blocks to stream data through localized models without exhausting host server memory pools."],
+        "appeal": ["Offers clear operational value by automating hours of manual cleanup tasks into seconds of processing."],
+        "feasibility": ["Utilized fine-tuned open weights for formatting tasks, allowing the team to avoid building foundational models from scratch."],
+        "scope": ["Scoped cleanly around document conversion steps, skipping unnecessary administrative or sharing tools entirely."]
+      },
+      "demoImpact": "Uploaded a massive, unformatted multi-page court transcript; the application cleaned the text structure and outputted an indexed case file layout in real time.",
+      "githubUrl": "https://github.com/mlh-winners/deepdeft-ai",
+      "devpostUrl": "https://devpost.com/software/deepdeft-ai"
+    },
+    {
+      "name": "StitchFix Dev",
+      "hackathon": "HackNjIT 2025",
+      "placement": "Best Git Automation Utility",
+      "category": "DevTools",
+      "description": "An automated merge routing daemon that intercepts conflicting pull requests, rewriting structural collisions safely before build tools trigger testing breaks.",
+      "techStack": ["Go", "GitHub API", "Libgit2", "Redis", "Node.js"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 8,
+        "technical": 10,
+        "appeal": 8,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Low-level repository tracking loops hooking directly into version control events safely",
+        "Abstract syntax tree conflict mapping analyzing true code structural shifts over simple line indicators",
+        "Asynchronous task runner processing deep code integration tests via background worker pools"
+      ],
+      "winningFactors": {
+        "innovation": ["Moved past primitive text-line checking into smart, structure-aware resolution algorithms for code integration conflicts."],
+        "technical": ["Leveraged high-performance C-bindings inside Go to execute rapid branch merging tasks safely without repository file corruption risk."],
+        "appeal": ["Directly addresses a massive, universal daily developer frustration point that technical review panels understand completely."],
+        "feasibility": ["Focused on parsing structural collision loops within JavaScript files specifically, keeping data models tightly bounded."],
+        "scope": ["Perfect operational balancing centered fully on conflict resolution routines, bypassing complex management dashboards."]
+      },
+      "demoImpact": "Pushed two separate branches containing conflicting changes to the exact same file line; the tool parsed the code structures and merged both features cleanly without throwing errors.",
+      "githubUrl": "https://github.com/mlh-winners/stitchfix-dev",
+      "devpostUrl": "https://devpost.com/software/stitchfix-dev"
+    },
+    {
+      "name": "EcoScan Mobile",
+      "hackathon": "Hackheist 2025",
+      "placement": "Best Consumer Green Hack",
+      "category": "Mobile Apps / Social Impact",
+      "description": "A mobile application utilizing client-side object tracking layers to instantly analyze plastic sorting codes and provide optimal localized municipal disposal guidance.",
+      "techStack": ["React Native", "PyTorch Mobile", "SQLite", "Node.js", "Express"],
+      "scores": {
+        "innovation": 7,
+        "feasibility": 10,
+        "technical": 8,
+        "appeal": 9,
+        "scope": 10
+      },
+      "keyFeatures": [
+        "On-device visual feature extraction layers analyzing macro symbols without requiring internet lookups",
+        "Geo-fenced database architectures indexing disposal parameters across individual zip codes cleanly",
+        "High-performance local rendering views driving rapid camera feedback loops smoothly"
+      ],
+      "winningFactors": {
+        "innovation": ["Turned a highly confusing everyday task (recycling rule compliance) into a simple point-and-scan mobile interface."],
+        "technical": ["Optimized camera inference processing to run locally on mid-range devices without overheating hardware components."],
+        "appeal": ["A highly practical utility that judges could immediately imagine utilizing in their daily lives."],
+        "feasibility": ["Built using familiar cross-platform mobile tools, allowing the team to ship a polished UI within the hackathon window."],
+        "scope": ["Maintained a narrow focus on immediate visual identification tasks, skipping typical gamification or social feed bloat."]
+      },
+      "demoImpact": "Pointed a mobile phone at a crushed plastic container; the app scanned the tiny triangular symbol and displayed custom disposal instructions instantly.",
+      "githubUrl": "https://github.com/mlh-winners/ecoscan-app",
+      "devpostUrl": "https://devpost.com/software/ecoscan-app"
+    },
+    {
+      "name": "AquaSim AR",
+      "hackathon": "HackBeach 2026",
+      "placement": "Best Educational Game",
+      "category": "Gaming / Social Impact",
+      "description": "An interactive augmented reality ecosystem simulator showing environmental fluid dynamics across real geography maps mapped via computer vision.",
+      "techStack": ["C#", "Unity3D", "ARCore", "OpenCV", "Python"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 8,
+        "technical": 9,
+        "appeal": 10,
+        "scope": 8
+      },
+      "keyFeatures": [
+        "Real-time visual outline tracking mapping contour lines from physical sand or tabletop models",
+        "Custom particle system processing high-density fluid calculations smoothly on mobile chipsets",
+        "Positional spatial audio systems shifting environmental sounds relative to user camera steps"
+      ],
+      "winningFactors": {
+        "innovation": ["Blended physical environmental materials directly with dynamic, real-time interactive digital physics processing loops."],
+        "technical": ["Wrote optimized spatial matrix reduction loops to ensure surface mapping updates didn't throttle visual engine frame tracking."],
+        "appeal": ["An highly engaging, visual showcase that drew crowds and offered immediate interactive feedback loops."],
+        "feasibility": ["Utilized robust base libraries for spatial tracking tasks, keeping team engineering energy focused on fluid calculations."],
+        "scope": ["Bounded the interaction engine to processing water movement paths exclusively, skipping complex weather variables."]
+      },
+      "demoImpact": "Placed a hand on a table surface; the AR view treated it as an active island ridge, routing digital water streams realistically around it live.",
+      "githubUrl": "https://github.com/mlh-winners/aquasim-ar",
+      "devpostUrl": "https://devpost.com/software/aquasim-ar"
+    },
+    {
+      "name": "BlinkAuth",
+      "hackathon": "Cruzhacks 2026",
+      "placement": "Best Identity Security Hack",
+      "category": "Fintech / DevTools",
+      "description": "An authentication library utilizing eye blink pattern recognition models to establish secure cryptographic identity tokens without reliance on traditional biometrics.",
+      "techStack": ["Python", "OpenCV", "WebAssembly", "JavaScript", "Rust"],
+      "scores": {
+        "innovation": 10,
+        "feasibility": 8,
+        "technical": 9,
+        "appeal": 9,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Temporal micro-movement vector tracking mapping liveness verification routines instantly",
+        "Client-side verification architectures compiled to high-speed WebAssembly packages",
+        "Deterministic key derivation engines generating temporary access codes from timing signatures"
+      ],
+      "winningFactors": {
+        "innovation": ["Created a practical response to deepfake injection risks by moving credential confirmation into active temporal behaviors."],
+        "technical": ["Successfully isolated subtle muscle response intervals from standard tracking data using fast frame-difference calculations."],
+        "appeal": ["Offers a highly secure alternative to traditional identity verification models, exciting privacy-focused judges."],
+        "feasibility": ["Implemented the front-facing capture application within a simple, clean single-page web environment."],
+        "scope": ["Focused completely on confirming a single successful access validation loop instead of constructing entire credential platforms."]
+      },
+      "demoImpact": "Presented a high-resolution photograph of a user to a webcam, which failed verification; the actual user then blinked a custom rhythmic code, gaining access instantly.",
+      "githubUrl": "https://github.com/mlh-winners/blinkauth-core",
+      "devpostUrl": "https://devpost.com/software/blinkauth-core"
+    },
+    {
+      "name": "Signpost Edge",
+      "hackathon": "HackRiver 2025",
+      "placement": "Best Low-Resource Tool",
+      "category": "Social Impact / Web Apps",
+      "description": "An offline-first browser routing framework that allows users in low-bandwidth regions to fetch web applications using basic SMS transport links.",
+      "techStack": ["Node.js", "Twilio API", "Service Workers", "SQLite", "Express"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 9,
+        "technical": 9,
+        "appeal": 9,
+        "scope": 10
+      },
+      "keyFeatures": [
+        "Data compression protocols packing full structured text payloads into minimal byte arrays",
+        "Service worker interception loops serving cached application shells without internet connectivity",
+        "Asynchronous message processing queues handling inbound and outbound data packets smoothly"
+      ],
+      "winningFactors": {
+        "innovation": ["Re-imagined daily communication infrastructure to solve data equality challenges in disconnected environments safely."],
+        "technical": ["Engineered a clean custom compilation architecture to convert structural web markup down into highly dense alphanumeric arrays."],
+        "appeal": ["A powerful humanitarian technical achievement that functioned beautifully under simulated data drop constraints."],
+        "feasibility": ["Utilized standard communications infrastructure, ensuring the system could deploy directly to any standard device immediately."],
+        "scope": ["Perfect operational definition centered around static text information queries, skipping rich media assets entirely."]
+      },
+      "demoImpact": "Unplugged the ethernet connection from a terminal device; sent a text message request, and successfully rendered an updated Wikipedia article using text response data.",
+      "githubUrl": "https://github.com/mlh-winners/signpost-edge",
+      "devpostUrl": "https://devpost.com/software/signpost-edge"
+    },
+    {
+      "name": "LogiMesh Labs",
+      "hackathon": "HackWustl 2025",
+      "placement": "1st Place Hardware Track",
+      "category": "Hardware / Fintech",
+      "description": "An automated sorting scale layout utilizing local spatial weight sensor arrays to dynamically track and update commercial shipping ledger metrics.",
+      "techStack": ["C++", "Arduino", "Node.js", "Express", "MongoDB"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 9,
+        "technical": 9,
+        "appeal": 8,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Low-level strain gauge signal calibration filtering electrical baseline noise effectively",
+        "Serial pipeline connections pushing active sensor data maps to local services instantly",
+        "Dynamic inventory management routing matching load weights against shipping order manifests"
+      ],
+      "winningFactors": {
+        "innovation": ["Automated warehouse validation checkpoints by pairing low-overhead hardware with real-time tracking software loops."],
+        "technical": ["Designed an adaptive rolling-average filter in embedded C to ensure mechanical vibrations didn't distort log accuracy."],
+        "appeal": ["A clean, commercial-ready physical implementation that addresses optimization goals directly within product distribution hubs."],
+        "feasibility": ["Constructed using affordable, widely available structural components, keeping physical assembly simple during development."],
+        "scope": ["Maintained clear focus on reading weight data structures accurately, bypassing full robotic conveyor integration."]
+      },
+      "demoImpact": "Dropped a package onto a physical tracking tray; the system instantly parsed the weight signature, matched it to an order log, and updated the inventory UI in under a second.",
+      "githubUrl": "https://github.com/mlh-winners/logimesh-hardware",
+      "devpostUrl": "https://devpost.com/software/logimesh-hardware"
+    },
+    {
+      "name": "VoltVibe Audio",
+      "hackathon": "HackPepp 2026",
+      "placement": "Best Audio DevTool",
+      "category": "DevTools / Web Apps",
+      "description": "An interactive digital signaling toolkit allowing developers to test audio filter configurations inside web environments using live code compilation paths.",
+      "techStack": ["JavaScript", "WebAudio API", "React", "Tailwind CSS"],
+      "scores": {
+        "innovation": 8,
+        "feasibility": 10,
+        "technical": 8,
+        "appeal": 9,
+        "scope": 10
+      },
+      "keyFeatures": [
+        "Modular audio processing node architectures allowing deep structural filter path connections",
+        "Real-time visual oscilloscopes charting waveform vectors smoothly using high-speed canvas loops",
+        "Inline value adjustment matrices updating audio parameters instantly without generation drops"
+      ],
+      "winningFactors": {
+        "innovation": ["Simplified the process of testing digital signal adjustments by moving the sandbox directly into an accessible browser workspace."],
+        "technical": ["Configured high-performance calculation buffers to prevent typical crackle errors during live parameter shifts."],
+        "appeal": ["Highly intuitive layout that made the underlying mathematics of audio processing accessible and easy to explore."],
+        "feasibility": ["Avoided complex external dependencies by executing the calculation logic entirely within native browser capabilities."],
+        "scope": ["Perfect hackathon scope: prioritized clean execution and interface responsiveness over recording or file export features."]
+      },
+      "demoImpact": "Adjusted an interactive frequency slider; the interface updated a visual wave rendering and modified a live test audio output smoothly without any stutter.",
+      "githubUrl": "https://github.com/mlh-winners/voltvibe-core",
+      "devpostUrl": "https://devpost.com/software/voltvibe-core"
+    },
+    {
+      "name": "NovaForge 3D",
+      "hackathon": "HackGeorgia 2026",
+      "placement": "Grand Prize Winner",
+      "category": "Web Apps / DevTools",
+      "description": "A high-performance in-browser spatial visualization platform optimized to render dense architectural assets quickly with low resource draw.",
+      "techStack": ["Three.js", "WebGL", "TypeScript", "Vite"],
+      "scores": {
+        "innovation": 9,
+        "feasibility": 9,
+        "technical": 10,
+        "appeal": 9,
+        "scope": 9
+      },
+      "keyFeatures": [
+        "Custom octree partitioning algorithms optimizing camera culling routines for massive scene sets",
+        "Shader pipelines rendering high-fidelity lighting maps dynamically without taxing host GPUs",
+        "Streamlined loading architectures unpacking spatial coordinates with minimal memory usage"
+      ],
+      "winningFactors": {
+        "innovation": ["Brought desktop-level rendering speeds to basic web browsers by utilizing highly efficient data layout management."],
+        "technical": ["Wrote custom WebGL shader scripts that combined multiple geometry passes, reducing draw call overhead by 70%."],
+        "appeal": ["The fluid movement and visual detail of the engine provided an immediate wow factor for review panels."],
+        "feasibility": ["Leveraged modern build tooling to maintain lightning-fast compilation times during development cycles."],
+        "scope": ["Focused explicitly on the performance of the rendering engine, skipping asset editing or creation features."]
+      },
+      "demoImpact": "Loaded a highly detailed 3D model containing over two million polygons; the browser app maintained a rock-solid 60 FPS while panning through the scene.",
+      "githubUrl": "https://github.com/mlh-winners/novaforge-engine",
+      "devpostUrl": "https://devpost.com/software/novaforge-engine"
+    }
+  ]
+}
