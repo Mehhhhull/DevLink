@@ -45,7 +45,7 @@ export default function Footer() {
                 </div>
             </div>
             <p className="py-4 text-center border-t mt-6 border-slate-700 text-slate-500">
-                Designed for hackathon teams, built to help you pitch stronger and ship smarter.
+                ©2026, Designed for hackathon teams, built to help you pitch stronger and ship smarter.
             </p>
         </motion.footer>
     );

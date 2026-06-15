@@ -33,8 +33,12 @@ export const googleAuth=async(req,res)=>{
     })
     return res.status(200).json(user)
   } catch (error) {
-    console.error('Google auth error:', error);
-    return res.status(500).json({message:`Google Auth Error ${error}`})
+    console.error('Google auth error:', error.message);
+    console.error('Error stack:', error.stack);
+    return res.status(500).json({
+      message: `Google Auth Error: ${error.message}`,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    })
   }
 }
 
